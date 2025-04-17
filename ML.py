@@ -1,8 +1,14 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+import os
 
-df = pd.read_csv("/Users/ashleyrazo/Desktop/obesity_prediction.csv")
+# Use a relative path to load the data
+# ⚠️ This assumes the script is run from the root of the repo (where ML.py is located) on your local machine
+# and that the CSV file is inside the 'raw_data/' folder.
+
+file_path = os.path.join("raw_data", "obesity_prediction.csv")
+df = pd.read_csv(file_path)
 
 categorical_cols = [
     "Gender", "family_history", "FAVC", "CAEC", "SMOKE",
