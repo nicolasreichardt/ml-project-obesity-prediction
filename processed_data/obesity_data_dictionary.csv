@@ -1,0 +1,18 @@
+variable_name,question,possible_answers
+gender,What is your gender?,"Female, Male"
+age,What is your age?,Numeric value
+height_m,What is your height?,Numeric value in meters
+weight_kg,What is your weight?,Numeric value in kilograms
+family_history_overweight,Has a family member suffered or suffers from overweight?,"Yes, No"
+high_caloric_food_freq,Do you eat high caloric food frequently?,"Yes, No"
+vegetables_freq,Do you usually eat vegetables in your meals?,"Never, Sometimes, Always"
+main_meal_count,How many main meals do you have daily?,"Between 1 y 2, Three, More than three"
+snacking_freq,Do you eat any food between meals?,"No, Sometimes, Frequently, Always"
+smokes,Do you smoke?,"Yes, No"
+water_intake,How much water do you drink daily?,"Less than a liter, Between 1 and 2 L, More than 2 L"
+calorie_tracking,Do you monitor the calories you eat daily?,"Yes, No"
+physical_activity_freq,How often do you have physical activity?,"I do not have, 1 or 2 days, 2 or 4 days, 4 or 5 days"
+screen_time_hours,"How much time do you use technological devices such as cell phone, videogames, television, computer and others?","0–2 hours, 3–5 hours, More than 5 hours"
+alcohol_consumption_freq,How often do you drink alcohol?,"I do not drink, Sometimes, Frequently, Always"
+transport_mode,Which transportation do you usually use?,"Automobile, Motorbike, Bike, Public Transportation, Walking"
+obesity_level,Obesity level (target variable),"Insufficient_Weight, Normal_Weight, Overweight_Level_I, Overweight_Level_II, Obesity_Type_I, Obesity_Type_II, Obesity_Type_III"
