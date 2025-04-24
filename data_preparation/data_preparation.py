@@ -51,4 +51,8 @@ test_data = pd.concat([X_test_scaled_df, y_test.reset_index(drop = True)], axis 
 train_data.to_csv("processed_data/train_data.csv", index=False)
 test_data.to_csv("processed_data/test_data.csv", index=False)
 
+#Save as feather file
+train_data.reset_index(drop=True).to_feather("processed_data/train_data.feather")
+test_data.reset_index(drop=True).to_feather("processed_data/test_data.feather")
+
 print("Training and testing data saved to 'processed_data/' folder.")
