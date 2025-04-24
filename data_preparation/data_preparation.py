@@ -7,7 +7,7 @@ import os
 # ⚠️ This assumes the script is run from the root of the repo (where ML.py is located) on your local machine
 # and that the CSV file is inside the 'raw_data/' folder.
 
-file_path = os.path.join("raw_data", "obesity_prediction.csv")
+file_path = os.path.join("processed_data", "obesity_cleaned.csv")
 df = pd.read_csv(file_path)
 
 #Define target and features 
@@ -16,8 +16,10 @@ y = df[target_col] #keep as categorical for multi-class classification
 X = df.drop(columns=[target_col])
 
 categorical_cols = [
-    "gender", "family_history_overweight", "high_caloric_food_freq", "snacking_freq", "smokes",
-    "calorie_tracking", "alcohol_consumption_freq", "transport_mode", "obesity_level"
+    "gender", "family_history_overweight", "high_caloric_food_freq", 
+    "vegetables_freq", "main_meal_count", "snacking_freq", "smokes",
+    "water_intake", "calorie_tracking", "physical_activity_freq",
+    "screen_time_hours", "alcohol_consumption_freq", "transport_mode"
 ]
 
 #perform one-hot encoding 
@@ -33,13 +35,17 @@ scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
+#Convert scaled arrays to dataframes
+X_train_scaled_df = pd.DataFrame(X_train_scaled, columns=X_train.columns)
+X_test_scaled_df = pd.DataFrame(X_test_scaled, columns=X_test.columns)
+
 # Check the result
-print("Training set shape:", X_train_scaled.shape)
-print("Testing set shape:", X_test_scaled.shape)
+print("Training set shape:", X_train_scaled_df.shape)
+print("Testing set shape:", X_test_scaled_df.shape)
 
 #Combine the features and labels for export 
-train_data = pd.concat([X_train_scaled, y_train.reset_index(drop = True)], axis = 1)
-test_data = pd.concat([X_test_scaled, y_test.reset_index(drop = True)], axis = 1)
+train_data = pd.concat([X_train_scaled_df, y_train.reset_index(drop = True)], axis = 1)
+test_data = pd.concat([X_test_scaled_df, y_test.reset_index(drop = True)], axis = 1)
 
 #Save to CSV
 train_data.to_csv("processed_data/train_data.csv", index=False)
