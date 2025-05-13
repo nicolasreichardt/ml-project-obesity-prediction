@@ -146,9 +146,6 @@ All models used the same preprocessed data for consistency.
 
 - Simple baseline with good interpretability
 
-
-
-
 <div style="page-break-after: always;"></div>
 
 ### Ridge Logistic Regression
@@ -156,8 +153,6 @@ All models used the same preprocessed data for consistency.
 📒 [ridge_logistic_regression.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/ridge_logistic_regression.ipynb)
 
 - Regularized version of logistic regression
-
-
 
 <div style="page-break-after: always;"></div>
 
@@ -167,10 +162,10 @@ All models used the same preprocessed data for consistency.
 
 This notebook investigates how dimensionality reduction with Principal Component Analysis (PCA) affects the performance of a K-Nearest Neighbors (KNN) classifier in predicting obesity levels. Four variations of KNN were trained and evaluated:
 
-- A **Baseline KNN Classifier** (with all features, no PCA)  
-- A **KNN Classifier with PCA** 
+- A **Baseline KNN Classifier** (with all features, no PCA)
+- A **KNN Classifier with PCA**
 - A **KNN Classifier on a reduced feature set** (excluding weight, height, and age)
-- A **KNN Classifier with PCA excluding SMOTE generated data** 
+- A **KNN Classifier with PCA excluding SMOTE generated data**
 
 The **best overall test accuracy (0.78)** was achieved **no matter whether we used PCA**. On the full dataset, PCA preserved nearly all variance but did not improve performance over the baseline. The reduced feature model performed significantly worse. Below is a more detailed overview of each approach and its outcomes.
 
@@ -180,8 +175,8 @@ The **best overall test accuracy (0.78)** was achieved **no matter whether we us
 
 Before model training, a careful encoding approach was applied to ensure distance metrics used by KNN remained meaningful:
 
-- **Binary variables** (e.g., gender, smoking) were mapped to 0 and 1  
-- **Ordinal variables** (e.g., `vegetables_freq`, `physical_activity_freq`) were encoded using manually defined, meaningful level orderings (e.g., *Never* < *Sometimes* < *Always*)  
+- **Binary variables** (e.g., gender, smoking) were mapped to 0 and 1
+- **Ordinal variables** (e.g., `vegetables_freq`, `physical_activity_freq`) were encoded using manually defined, meaningful level orderings (e.g., *Never* < *Sometimes* < *Always*)
 
 This ordinal encoding preserved structure while avoiding the sparsity of one-hot encoding. This is particularly important for KNN, as high-dimensionality can dilute the distance signal.
 
@@ -191,8 +186,8 @@ This ordinal encoding preserved structure while avoiding the sparsity of one-hot
 
 The baseline KNN was trained on all scaled features (excluding `transport_mode`, which had weak correlations with obesity level). The model was tuned via 5-fold cross-validation across values of \( k \). The best model used:
 
-- **k:** 1  
-- **Test Accuracy:** 0.7754  
+- **k:** 1
+- **Test Accuracy:** 0.7754
 
 ![](../plots/accuracy_vs_k_no_pca.png)
 
@@ -204,11 +199,11 @@ The high performance at \( k = 1 \) could be explained by the use of SMOTE, whic
 
 Dimensionality reduction was implemented using a pipeline that included PCA followed by KNN, evaluated using grid search with cross-validation. The best configuration was:
 
-- **k:** 1  
-- **Number of PCA Components:** 15  
-- **Test Accuracy:** 0.7754  
+- **k:** 1
+- **Number of PCA Components:** 15
+- **Test Accuracy:** 0.7754
 
-![](../plots/explained_variance_by__pca_components.png)
+![](../plots/explained_variance_by_pca_components.png)
 
 The number of features got not reduced, therefore PCA preserved all variance from the original data. As a result, model performance remained unchanged. This suggests PCA did not effectively compress the input space.
 
@@ -218,11 +213,11 @@ The number of features got not reduced, therefore PCA preserved all variance fro
 
 To avoid target leakage, we removed the features weight_kg and height_m, as the target variable (BMI-based obesity level) is directly derived from them via the BMI formula. Including these features would allow the model to trivially reconstruct the label. The final model used:
 
-- **k:** 3  
-- **Test Accuracy:** 0.5934  
+- **k:** 3
+- **Test Accuracy:** 0.5934
 
-![](../plots/knn_accuracy_vs_k_reduced_features.png)  
-![](../plots/model_comparison_pca_knn.png)
+![](../plots/accuracy_vs_k_reduced_features.png)
+![](../plots/model_comparison_knn_pca.png)
 
 This performance drop is expected. However, this version focuses on **modifiable lifestyle variables**, which are more suitable for public health use cases, as they can be self-reported, less privacy sensitive and can be targeted through interventions.
 
@@ -232,11 +227,11 @@ This performance drop is expected. However, this version focuses on **modifiable
 
 To assess generalizability, the model was re-evaluated on a 23% subset of non-synthetic data. The best KNN+PCA model achieved:
 
-- **k:** 1  
-- **Number of PCA Components:** 15  
-- **Test Accuracy:** 0.8763  
+- **k:** 1
+- **Number of PCA Components:** 15
+- **Test Accuracy:** 0.8763
 
-![](../plots/accuracy_vs_k_real_data.png)  
+![](../plots/accuracy_vs_k_real_data.png)
 ![](../plots/explained_variance_real_data.png)
 
 This confirms that PCA can be effective in real-world scenarios, helping to reduce noise and correlation while preserving essential structure.
@@ -247,9 +242,9 @@ This confirms that PCA can be effective in real-world scenarios, helping to redu
 
 A 3D PCA plot was generated using the first three components. Original features were projected as black arrows to indicate their influence on component directions. Visual inspection showed:
 
-- Features like **vegetables_freq** and **physical_activity_freq** pointed toward key directions of variation  
-- Moderate separation of obesity classes was visible, especially for **extreme categories like Obesity_Type_III**  
-- PCA successfully reduced redundancy and improved interpretability of the input space  
+- Features like **vegetables_freq** and **physical_activity_freq** pointed toward key directions of variation
+- Moderate separation of obesity classes was visible, especially for **extreme categories like Obesity_Type_III**
+- PCA successfully reduced redundancy and improved interpretability of the input space
 
 ![3D PCA Scatter](../plots/pca_3d_scatter_plot.png)
 
@@ -264,8 +259,6 @@ A 3D PCA plot was generated using the first three components. Original features 
 - Balanced performance across all obesity categories
 
 ![Neural Network Training Curves](../plots/training_curves_nn.png)
-
-
 
 <div style="page-break-after: always;"></div>
 
@@ -287,17 +280,17 @@ The best overall test accuracy was achieved by the **Baseline Decision Tree**, w
 
 The Decision Tree model was trained using a pipeline that incorporated preprocessing and grid search for hyperparameter tuning. The best model used:
 
-- **Criterion:** Entropy  
-- **Max Depth:** 15  
-- **Min Samples Split:** 2  
-- **Min Samples Leaf:** 1  
+- **Criterion:** Entropy
+- **Max Depth:** 15
+- **Min Samples Split:** 2
+- **Min Samples Leaf:** 1
 
 This configuration produced a **cross-validation accuracy of 0.9479** and a **test accuracy of 0.9611**, suggesting that the model generalized very well to unseen data — to an extent that even outperformed its validation score, which is atypical and discussed further in the comparison section.
 
 In terms of feature importance, **biometric features** dominated the predictions:
 
-- **Weight**: 0.625  
-- **Height**: 0.197  
+- **Weight**: 0.625
+- **Height**: 0.197
 
 Lifestyle-related features such as “high caloric food intake” played a significantly lesser role.
 
@@ -307,11 +300,11 @@ Lifestyle-related features such as “high caloric food intake” played a signi
 
 The Random Forest model was also trained using a pipeline with preprocessing and 5-fold cross-validation. The optimal configuration from grid search was:
 
-- **Max Depth:** 20  
-- **Number of Estimators:** 200  
-- **Max Features:** 'sqrt'  
-- **Min Samples Leaf:** 1  
-- **Min Samples Split:** 2  
+- **Max Depth:** 20
+- **Number of Estimators:** 200
+- **Max Features:** 'sqrt'
+- **Min Samples Leaf:** 1
+- **Min Samples Split:** 2
 
 With these settings, the model achieved a **cross-validation accuracy of approximately 0.935** and a **test accuracy of 0.936**. These results again indicate good generalization with very similar performance on both validation and test sets.
 
@@ -322,27 +315,25 @@ The feature importances mirrored those found in the Decision Tree model. **Weigh
 #### XGBoost Classifier
 
 Disclaimer:
-  1. XGBoost models can be computationally intensive, especially when using an extensive parameter grid and k-fold cross-validation. Our team experienced computational issues running the models under certain specifications. Therefore, both the n_jobs argument in XGBClassifier (see pipeline) and in GridSearchCV are set to 1. Feel free to change this argument depending on your device's computational power (setting it to -1 will use all available CPU cores).
-  2. Because of changes in the scikit-learn and XGBoost APIs over time, there is a version incompatibility between scikit-learn and the most recent version of XGBoost. As previously stated, it is necessary to use scikit-learn==1.5.2, as specified in the requirements.txt.  
-   
+
+1. XGBoost models can be computationally intensive, especially when using an extensive parameter grid and k-fold cross-validation. Our team experienced computational issues running the models under certain specifications. Therefore, both the n_jobs argument in XGBClassifier (see pipeline) and in GridSearchCV are set to 1. Feel free to change this argument depending on your device's computational power (setting it to -1 will use all available CPU cores).
+2. Because of changes in the scikit-learn and XGBoost APIs over time, there is a version incompatibility between scikit-learn and the most recent version of XGBoost. As previously stated, it is necessary to use scikit-learn==1.5.2, as specified in the requirements.txt.
+
 The XGBoost model was also trained using a pipeline with preprocessing and 5-fold cross-validation. The best model parameters were:
 
-- **Learning Rate:** 0.2  
-- **Max Depth:** 3  
-- **Number of Estimators:** 200  
+- **Learning Rate:** 0.2
+- **Max Depth:** 3
+- **Number of Estimators:** 200
 
 This configuration resulted in the **highest cross-validation accuracy of 0.9668**, indicating that the model fit the training data extremely well. However, the **test accuracy dropped slightly to 0.9574**, just below the baseline Decision Tree model.
 
 Interestingly, the XGBoost model’s feature importances showed a different pattern:
 
-- Top features included **"female gender"** and **"weight"**  
-- Lifestyle-related variables like **"high caloric food frequency," "alcohol consumption frequency,"** and **"snacking frequency"** appeared in the top five  
-- **"Height"** was notably absent from the most important predictors  
-
+- Top features included **"female gender"** and **"weight"**
+- Lifestyle-related variables like **"high caloric food frequency," "alcohol consumption frequency,"** and **"snacking frequency"** appeared in the top five
+- **"Height"** was notably absent from the most important predictors
 
 The following section will compare and offer an interpretation of these results and the feature importances.
-
-
 
 <div style="page-break-after: always;"></div>
 
@@ -354,16 +345,14 @@ The following section will compare and offer an interpretation of these results 
 | Ridge Logistic Regression | ~XX%            | Slight improvement with regularization |
 | KNN                       | ~XX%            | Better with PCA                        |
 | Neural Network            | **83.9%** | Strong generalization                  |
-| Random Forest             | ~XX%        | Robust, interpretable                  |
+| Random Forest             | ~XX%            | Robust, interpretable                  |
 | XGBoost                   | ~XX%            | Top performer with best generalization |
 
+We will now compare our three best-performing models:
 
-
-We will now compare our three best-performing models: 
 - The **Baseline Decision Tree Classifier**,
 - the **Random Forest Classifier** and
 - the **XGBoost Classifier**.
-
 
 ### Model Comparison Overview
 
@@ -372,6 +361,7 @@ Let's first remind ourselves of the test accuracy of our three models with the f
 ![Model Comparison](../plots/tree_based_model_comparison.png)
 
 #### 1. Decision Tree Outperforming Other Models
+
 In the plot above, we observed that our **baseline Decision Tree classifier** outperformed the more complex models—**Random Forest** and **XGBoost**. Nevertheless, all three models performed exceptionally well in terms of accuracy.
 
 The superior performance of the Decision Tree is not entirely surprising. The relationship between the features and the target variable appears to be relatively simple, allowing for decision boundaries that can be effectively captured by straightforward, rule-based splits. This is particularly true for the predictors **"weight"** and **"height"**, which directly influence the target variable.
@@ -386,14 +376,11 @@ We observed very high testing accuracy and high training/validation accuracy acr
 
 Based on these results, we can exclude the possibility that our models were overfitting. However, this pattern revealed two important issues within the dataset:
 
-1. **Target Leakage via BMI-Related Features**  
-   As previously discussed, the target variable—obesity level—is derived directly from the **Body Mass Index (BMI)**, which is itself calculated using the features **"height"** and **"weight."** Including these features in the model introduced a direct link between inputs and the target, thereby inflating the predictive performance. In essence, the models were not discovering latent behavioral patterns, but rather reverse-engineering the BMI classification from the variables used to compute it.
-
-2. **Synthetic Data and Non-Independent Splits**  
+1. **Target Leakage via BMI-Related Features**As previously discussed, the target variable—obesity level—is derived directly from the **Body Mass Index (BMI)**, which is itself calculated using the features **"height"** and **"weight."** Including these features in the model introduced a direct link between inputs and the target, thereby inflating the predictive performance. In essence, the models were not discovering latent behavioral patterns, but rather reverse-engineering the BMI classification from the variables used to compute it.
+2. **Synthetic Data and Non-Independent Splits**
    A significant portion of the dataset—approximately **77%** of the records—was synthetically generated using the **SMOTE algorithm** to address class imbalance. While SMOTE is effective at improving model robustness, it creates synthetic samples that are interpolated from existing ones. As a result, the **training and test sets are not entirely independent**, which likely reduced the challenge of the prediction task. This may explain why the test set performance matched—or even slightly exceeded—the training/validation accuracy.
 
 These factors highlight potential limitations in model evaluation and suggest caution when interpreting the performance metrics at face value.
-
 
 #### 3. Biometric Features vs. Lifestyle Features
 
@@ -409,9 +396,6 @@ This creates a **circular relationship** in the model: we use BMI to define obes
 
 It is also notable that the **XGBoost model’s feature importance rankings** differed significantly from those of the Decision Tree and Random Forest models, even in the full-feature setting. Specifically, features such as **"height"** and **"age"** were **not** among the top predictors in XGBoost, despite being highly ranked in the other two models. This discrepancy is likely due to how these algorithms handle **correlated or redundant features**.
 
-
-
-
 ### Model Comparison with Feature Exclusion
 
 ![Model Comparison (Excluded Features)](../plots/tree_based_model_comparison_feature_exclusion.png)
@@ -419,9 +403,6 @@ It is also notable that the **XGBoost model’s feature importance rankings** di
 TO COMPLETE BY NICO
 
 TO COMPLETE BY NICO
-
-
-
 
 <div style="page-break-after: always;"></div>
 
