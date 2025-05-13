@@ -368,12 +368,11 @@ code {
 <p><img src="images/Hertie_School_of_Governance_logo.png" alt="Hertie Logo"></p>
 <h1 id="obesity-prediction">Obesity Prediction</h1>
 <h2 id="the-scale-doesnt-lie--but-does-our-model">The Scale Doesn’t Lie — But Does Our Model?</h2>
-<p><strong>Final Report</strong>
-Supervised Machine Learning · Spring 2025
-Hertie School · MDS</p>
-<p><strong>Authors</strong>
-Nadine Daum · Ashley Razo · Jasmin Mehnert · Nicolas Reichardt</p>
-<p>GitHub: https://github.com/nicolasreichardt/ml-project-obesity-prediction
+<p><strong>Final Report</strong><br>
+Machine Learning · Spring 2025</p>
+<p><strong>Authors</strong><br>
+Nadine Daum · Jasmin Mehnert · Ashley Razo · Nicolas Reichardt</p>
+<p>GitHub: https://github.com/nicolasreichardt/ml-project-obesity-prediction<br>
 Submission: 23 May 2025</p>
 <div style="page-break-after: always;"></div>
 <h2 id="summary">Summary</h2>
@@ -511,7 +510,7 @@ Submission: 23 May 2025</p>
 <p>The preprocessing pipeline ensured consistency and cleanliness of the dataset ahead of modeling. Initially, inconsistencies in categorical encodings were resolved by harmonizing all variables into either clean categorical or numeric formats. Several ordinal features contained unexpected decimal values, likely due to synthetic oversampling (SMOTE). These were systematically rounded to the nearest valid categories and mapped back to interpretable labels, informed by the original survey structure.</p>
 <p>All column names were renamed for clarity and uniformity, and a comprehensive data dictionary was created to document question wording and response options. Categorical features were converted to the appropriate category type, while numerical variables were explicitly cast as floats.</p>
 <h3 id="implementation">Implementation</h3>
-<p>📒 Notebook: <a href="notebooks/preprocessing.ipynb"><code>notebooks/preprocessing.ipynb</code></a>
+<p>📒 Notebook: <a href="notebooks/preprocessing.ipynb"><code>notebooks/preprocessing.ipynb</code></a><br>
 🧾 Script: <a href="processed_data/data_preparation.py"><code>processed_data/data_preparation.py</code></a></p>
 <p>All models consumed the same cleaned and scaled training and testing data.</p>
 <div style="page-break-after: always;"></div>
@@ -573,7 +572,7 @@ Submission: 23 May 2025</p>
 <li><strong>k:</strong> 3</li>
 <li><strong>Test Accuracy:</strong> 0.5934</li>
 </ul>
-<p><img src="../plots/accuracy_vs_k_reduced_features.png" alt="">
+<p><img src="../plots/accuracy_vs_k_reduced_features.png" alt=""><br>
 <img src="../plots/model_comparison_knn_pca.png" alt=""></p>
 <p>This performance drop is expected. However, this version focuses on <strong>modifiable lifestyle variables</strong>, which are more suitable for public health use cases, as they can be self-reported, less privacy sensitive and can be targeted through interventions.</p>
 <hr>
@@ -584,7 +583,7 @@ Submission: 23 May 2025</p>
 <li><strong>Number of PCA Components:</strong> 15</li>
 <li><strong>Test Accuracy:</strong> 0.8763</li>
 </ul>
-<p><img src="../plots/accuracy_vs_k_real_data.png" alt="">
+<p><img src="../plots/accuracy_vs_k_real_data.png" alt=""><br>
 <img src="../plots/explained_variance_real_data.png" alt=""></p>
 <p>This confirms that PCA can be effective in real-world scenarios, helping to reduce noise and correlation while preserving essential structure.</p>
 <hr>
@@ -599,12 +598,53 @@ Submission: 23 May 2025</p>
 <div style="page-break-after: always;"></div>
 <h3 id="neural-network">Neural Network</h3>
 <p>📒 <a href="https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/neural_network.ipynb">neural_network.ipynb</a></p>
+<p>This notebook implements a multi-layer feedforward neural network for classifying individuals into one of seven obesity categories. The model was built using Keras with a TensorFlow backend and trained on the shared, preprocessed dataset.</p>
+<h4 id="preprocessing--input-data">Preprocessing &amp; Input Data</h4>
+<p>Neural networks require all inputs to be numeric and appropriately scaled. To meet this requirement:</p>
 <ul>
-<li>Multi-layer architecture with ReLU and softmax</li>
-<li>Test accuracy: <strong>83.9%</strong></li>
-<li>Balanced performance across all obesity categories</li>
+<li>Categorical variables were <strong>one-hot encoded</strong>, resulting in binary columns representing each category. This expanded the feature space to approximately 43 input dimensions.</li>
+<li>Numerical features such as <code>age</code>, <code>height_m</code>, and <code>weight_kg</code> were <strong>standardized using <code>StandardScaler</code></strong>, which centers the data and scales to unit variance.</li>
 </ul>
-<p><img src="../plots/training_curves_nn.png" alt="Neural Network Training Curves"></p>
+<p>The model architecture consisted of:</p>
+<ul>
+<li>Two fully connected hidden layers with <strong>ReLU activation</strong></li>
+<li><strong>Dropout layers (rate: 0.3)</strong> for regularization</li>
+<li>A <strong>softmax output layer</strong> for multi-class classification (7 classes)</li>
+</ul>
+<p>The model was trained using:</p>
+<ul>
+<li><strong>Loss function</strong>: <code>categorical_crossentropy</code></li>
+<li><strong>Optimizer</strong>: <code>Adam</code></li>
+<li><strong>Epochs</strong>: 50</li>
+<li>Target: one-hot encoded labels for <code>obesity_level</code></li>
+</ul>
+<h4 id="training-process">Training Process</h4>
+<p>The model was trained on the shared training set (<code>train_data.feather</code>) and evaluated on the standard test set. The training history showed stable convergence of both loss and accuracy, with validation metrics closely tracking the training metrics:</p>
+<p><img src="images/nn_training_curve.png" alt="Training Curve"></p>
+<p>No signs of overfitting were observed, likely due to dropout regularization and standardized inputs.</p>
+<h4 id="performance-evaluation">Performance Evaluation</h4>
+<p>The neural network achieved a <strong>test accuracy of 83.9%</strong>, making it one of the best-performing models in the overall comparison.</p>
+<p>Class-level performance was assessed using a confusion matrix:</p>
+<p><img src="images/nn_confusion_matrix.png" alt="Confusion Matrix"></p>
+<p>The model showed strong predictive ability across most classes, with misclassifications primarily occurring between adjacent categories (e.g., Normal Weight and Overweight Level I/II). Performance was especially strong in more distinct categories such as Obesity Type III and Insufficient Weight.</p>
+<ul>
+<li>
+<p><strong>Strengths</strong>:</p>
+<ul>
+<li>Stable training and generalization to unseen data</li>
+<li>Accurate classification across all seven categories</li>
+<li>Effective in capturing non-linear relationships in the data</li>
+</ul>
+</li>
+<li>
+<p><strong>Limitations</strong>:</p>
+<ul>
+<li>Requires extensive preprocessing (encoding and scaling)</li>
+<li>Less interpretable than linear or tree-based models</li>
+<li>Sensitive to architecture and hyperparameter choices</li>
+</ul>
+</li>
+</ul>
 <div style="page-break-after: always;"></div>
 <h3 id="tree-based-models">Tree-Based Models</h3>
 <p>📒 <a href="https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/tree-based-models.ipynb">tree-based-models.ipynb</a></p>
@@ -731,7 +771,7 @@ Submission: 23 May 2025</p>
 <p>Based on these results, we can exclude the possibility that our models were overfitting. However, this pattern revealed two important issues within the dataset:</p>
 <ol>
 <li><strong>Target Leakage via BMI-Related Features</strong>As previously discussed, the target variable—obesity level—is derived directly from the <strong>Body Mass Index (BMI)</strong>, which is itself calculated using the features <strong>&quot;height&quot;</strong> and <strong>&quot;weight.&quot;</strong> Including these features in the model introduced a direct link between inputs and the target, thereby inflating the predictive performance. In essence, the models were not discovering latent behavioral patterns, but rather reverse-engineering the BMI classification from the variables used to compute it.</li>
-<li><strong>Synthetic Data and Non-Independent Splits</strong>
+<li><strong>Synthetic Data and Non-Independent Splits</strong><br>
 A significant portion of the dataset—approximately <strong>77%</strong> of the records—was synthetically generated using the <strong>SMOTE algorithm</strong> to address class imbalance. While SMOTE is effective at improving model robustness, it creates synthetic samples that are interpolated from existing ones. As a result, the <strong>training and test sets are not entirely independent</strong>, which likely reduced the challenge of the prediction task. This may explain why the test set performance matched—or even slightly exceeded—the training/validation accuracy.</li>
 </ol>
 <p>These factors highlight potential limitations in model evaluation and suggest caution when interpreting the performance metrics at face value.</p>
@@ -775,7 +815,7 @@ A significant portion of the dataset—approximately <strong>77%</strong> of the
 <li><strong>Nadine Daum</strong> – Neural network, Ridge/Lasso regression</li>
 <li><strong>Ashley Razo</strong> – Preprocessing, logistic regression</li>
 <li><strong>Jasmin Mehnert</strong> – PCA &amp; KNN, preprocessing support</li>
-<li><strong>Nicolas Reichardt</strong> – Random Forest, XGBoost, evaluation
+<li><strong>Nicolas Reichardt</strong> – Random Forest, XGBoost, evaluation<br>
 All team members contributed to meetings, reviews, and report writing.</li>
 </ul>
 
