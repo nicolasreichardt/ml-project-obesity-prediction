@@ -1,16 +1,17 @@
-<img src="plots/hertie_logo.png" alt="Hertie Logo" width="90"/>
+<img src="images/hertie_logo.svg" alt="Hertie Logo" width="90"/>
 
-# Obesity Prediction  
+# Obesity Prediction
+
 ## The Scale Doesn’t Lie — But Does Our Model?
 
-**Final Report**  
-Supervised Machine Learning · Spring 2025  
+**Final Report**
+Supervised Machine Learning · Spring 2025
 Hertie School · MDS
 
-**Authors**  
+**Authors**
 Nadine Daum · Ashley Razo · Jasmin Mehnert · Nicolas Reichardt
 
-GitHub: https://github.com/nicolasreichardt/ml-project-obesity-prediction  
+GitHub: https://github.com/nicolasreichardt/ml-project-obesity-prediction
 Submission: 12 May 2025
 
 <div style="page-break-after: always;"></div>
@@ -28,16 +29,17 @@ Our best-performing models achieved test accuracy scores above 85%, with interpr
 - [Team](#team)
 - [Project Overview](#project-overview)
 - [1. Dataset Description](#1-dataset-description)
-- [2. Preprocessing & Feature Engineering](#2-preprocessing--feature-engineering)
+- [2. Preprocessing &amp; Feature Engineering](#2-preprocessing--feature-engineering)
 - [3. Model Overviews](#3-model-overviews)
 - [4. Model Comparison](#4-model-comparison)
 - [5. Reflections](#5-reflections)
-- [Appendix A: Links & Files](#appendix-a-links--files)
+- [Appendix A: Links &amp; Files](#appendix-a-links--files)
 - [Appendix B: Team Contributions](#appendix-b-team-contributions)
 
 ---
 
 ## Team
+
 - Nadine Daum – [GitHub](https://github.com/NadineDaum) | [Email](mailto:n.daum@students.hertie-school.org)
 - Jasmin Mehnert – [GitHub](https://github.com/jasmin-mehnert) | [Email](mailto:j.mehnert@students.hertie-school.org)
 - Ashley Razo – [GitHub](https://github.com/ashley-razo) | [Email](mailto:a.razo@students.hertie-school.org)
@@ -58,6 +60,7 @@ GitHub repo: [nicolasreichardt/ml-project-obesity-prediction](https://github.com
 We used the **Obesity Levels Estimation Dataset**, which contains demographic, behavioral, and biometric data for 2,111 individuals from Mexico, Peru, and Colombia. The dataset was designed for multi-class classification and is labeled with 7 obesity categories.
 
 ### Dataset Overview:
+
 - **Size**: 2,111 samples × 17 features + 1 target
 - **Features**: mix of categorical (e.g., gender, transport_mode) and numerical (e.g., height, weight, age)
 - **Target variable**: `obesity_level` with 7 classes:
@@ -73,7 +76,7 @@ We used the **Obesity Levels Estimation Dataset**, which contains demographic, b
 
 The data was collected via a cross-sectional survey and is publicly available on [Kaggle](https://www.kaggle.com/datasets/ruchikakumbhar/obesity-prediction), supported by this [research article](https://pmc.ncbi.nlm.nih.gov/articles/PMC6710633/).
 
-> 📝 **Jasmin – please add 1–2 sentences here about EDA findings**  
+> 📝 **Jasmin – please add 1–2 sentences here about EDA findings**
 > For example: were there correlations, outliers, imbalances, or interesting clusters?
 
 All team members used a shared train/test split to ensure model comparability.
@@ -85,6 +88,7 @@ All team members used a shared train/test split to ensure model comparability.
 Before modeling, the dataset required thorough cleaning and transformation. This step was led primarily by **Ashley Razo** and **Jasmin Mehnert**, with feedback and reviews from all team members.
 
 ### Preprocessing Goals
+
 - Ensure consistent input format across models
 - Improve model performance and comparability
 - Reduce noise, redundancy, and scaling-related bias
@@ -99,11 +103,12 @@ Before modeling, the dataset required thorough cleaning and transformation. This
 - **Train/test split**: 80/20 split applied uniformly to ensure fair model evaluation
 - **File formats**: Datasets exported as both `.csv` and `.feather` (for faster access)
 
-> 📝 **@Ashley** – feel free to insert 1–2 sentences on your preprocessing pipeline: decisions around feature selection, encoding strategies, or challenges during cleaning  
+> 📝 **@Ashley** – feel free to insert 1–2 sentences on your preprocessing pipeline: decisions around feature selection, encoding strategies, or challenges during cleaning
 > 📝 **@Jasmin** – you can briefly note how you supported the pipeline and flag any edge cases or quirks in the data
 
 ### Implementation
-📒 Notebook: [`notebooks/preprocessing.ipynb`](notebooks/preprocessing.ipynb)  
+
+📒 Notebook: [`notebooks/preprocessing.ipynb`](notebooks/preprocessing.ipynb)
 🧾 Script: [`processed_data/data_preparation.py`](processed_data/data_preparation.py)
 
 All models consumed the same cleaned and scaled training and testing data.
@@ -115,21 +120,25 @@ All models consumed the same cleaned and scaled training and testing data.
 All models used the same preprocessed data for consistency.
 
 ### Logistic Regression
+
 📒 [logistic_regression.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/logistic_regression.ipynb)
 
 - Simple baseline with good interpretability
 
 ### Ridge Logistic Regression
+
 📒 [ridge_logistic_regression.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/ridge_logistic_regression.ipynb)
 
 - Regularized version of logistic regression
 
 ### K-Nearest Neighbors (KNN)
+
 📒 [PCA_KNN.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/PCA_KNN.ipynb)
 
 - PCA helped reduce dimensionality and improved KNN performance
 
 ### Neural Network
+
 📒 [neural_network.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/neural_network.ipynb)
 
 - Multi-layer architecture with ReLU and softmax
@@ -139,6 +148,7 @@ All models used the same preprocessed data for consistency.
 ![Neural Network Training Curves](plots/training_curves_nn.png)
 
 ### Tree-Based Models
+
 📒 [tree-based-models.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/tree-based-models.ipynb)
 
 - Random Forest & XGBoost achieved top performance (~86%)
@@ -148,22 +158,25 @@ All models used the same preprocessed data for consistency.
 
 ## 4. Model Comparison
 
-| Model                   | Test Accuracy | Notes                                              |
-|-------------------------|----------------|----------------------------------------------------|
-| Logistic Regression     | ~75%           | Simple, interpretable                              |
-| Ridge Logistic Regression | ~76%         | Slight improvement with regularization             |
-| KNN                     | ~77%           | Better with PCA                                    |
-| Neural Network          | **83.9%**      | Strong generalization                              |
-| Random Forest           | ~85–86%        | Robust, interpretable                              |
-| XGBoost                 | ~86%           | Top performer with best generalization             |
+| Model                     | Test Accuracy   | Notes                                  |
+| ------------------------- | --------------- | -------------------------------------- |
+| Logistic Regression       | ~75%            | Simple, interpretable                  |
+| Ridge Logistic Regression | ~76%            | Slight improvement with regularization |
+| KNN                       | ~77%            | Better with PCA                        |
+| Neural Network            | **83.9%** | Strong generalization                  |
+| Random Forest             | ~85–86%        | Robust, interpretable                  |
+| XGBoost                   | ~86%            | Top performer with best generalization |
 
 ### Feature Importance – Tree-Based Models
+
 ![Top Features](plots/top_features_tree_based_models.png)
 
 ### Model Comparison Overview
+
 ![Model Comparison](plots/tree_based_model_comparison.png)
 
 ### Model Comparison with Feature Exclusion
+
 ![Model Comparison (Excluded Features)](plots/tree_based_model_comparison_feature_exclusion.png)
 
 <div style="page-break-after: always;"></div>
@@ -190,8 +203,8 @@ All models used the same preprocessed data for consistency.
 
 ## Appendix B: Team Contributions
 
-- **Nadine Daum** – Neural network, Ridge/Lasso regression  
-- **Ashley Razo** – Preprocessing, logistic regression  
-- **Jasmin Mehnert** – PCA & KNN, preprocessing support  
-- **Nicolas Reichardt** – Random Forest, XGBoost, evaluation  
-All team members contributed to meetings, reviews, and report writing.
+- **Nadine Daum** – Neural network, Ridge/Lasso regression
+- **Ashley Razo** – Preprocessing, logistic regression
+- **Jasmin Mehnert** – PCA & KNN, preprocessing support
+- **Nicolas Reichardt** – Random Forest, XGBoost, evaluation
+  All team members contributed to meetings, reviews, and report writing.
