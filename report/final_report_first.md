@@ -34,14 +34,23 @@ Our best-performing models achieved test accuracy scores above 85%, with interpr
   - [Project Overview](#project-overview)
   - [1. Dataset Description](#1-dataset-description)
     - [Dataset Overview:](#dataset-overview)
+    - [EDA findings:](#eda-findings)
+    - [Train/Test Split:](#traintest-split)
   - [2. Preprocessing \& Feature Engineering](#2-preprocessing--feature-engineering)
     - [Preprocessing Goals](#preprocessing-goals)
     - [Key Steps](#key-steps)
+    - [Data Preprocessing Summary](#data-preprocessing-summary)
     - [Implementation](#implementation)
   - [3. Model Overviews](#3-model-overviews)
     - [Logistic Regression](#logistic-regression)
     - [Ridge Logistic Regression](#ridge-logistic-regression)
     - [K-Nearest Neighbors (KNN)](#k-nearest-neighbors-knn)
+    - [Encoding Strategy](#encoding-strategy)
+    - [Baseline KNN Classifier (No PCA)](#baseline-knn-classifier-no-pca)
+    - [KNN with PCA](#knn-with-pca)
+    - [KNN with Reduced Feature Set](#knn-with-reduced-feature-set)
+    - [Validation on Real-Only Data](#validation-on-real-only-data)
+    - [PCA Visualization in 3D](#pca-visualization-in-3d)
     - [Neural Network](#neural-network)
     - [Tree-Based Models](#tree-based-models)
       - [Decision Tree Classifier](#decision-tree-classifier)
@@ -355,14 +364,15 @@ The following section will compare and offer an interpretation of these results 
 
 ## 4. Model Comparison
 
-| Model                     | Test Accuracy   | Notes                                  |
-| ------------------------- | --------------- | -------------------------------------- |
-| Logistic Regression       | ~XX%            | Simple, interpretable                  |
-| Ridge Logistic Regression | ~XX%            | Slight improvement with regularization |
-| KNN                       | ~XX%            | Better with PCA                        |
-| Neural Network            | **83.9%** | Strong generalization                  |
-| Random Forest             | ~XX%            | Robust, interpretable                  |
-| XGBoost                   | ~XX%            | Top performer with best generalization |
+| Model                     | Test Accuracy | Notes                                  |
+| ------------------------- | ------------- | -------------------------------------- |
+| Logistic Regression       | ~XX%          | Simple, interpretable                  |
+| Ridge Logistic Regression | ~XX%          | Slight improvement with regularization |
+| KNN                       | ~XX%          | Better with PCA                        |
+| Neural Network            | 83.9%         | Strong generalization                  |
+| Baseline Decision Tree    | 96.45%        | XXX                                    |
+| Random Forest             | 93.62%        | XXX                                    |
+| XGBoost                   | 95.74%        | XXX                                    |
 
 We will now compare our three best-performing models:
 
@@ -416,11 +426,11 @@ It is also notable that the **XGBoost model’s feature importance rankings** di
 
 ![Model Comparison (Excluded Features)](../plots/tree_based_model_comparison_feature_exclusion.png)
 
-TO COMPLETE BY NICO
+As expected, removing the "height" and "weight" features caused a significant drop in model performance. The baseline Decision Tree's accuracy decreased from 0.965 to 0.716, the Random Forest's dropped from 0.936 to 0.79, and the XGBoost model fell from 0.957 to 0.79. These reductions limited the models' accuracy and practical utility.
 
-TO COMPLETE BY NICO
+Notably, both the Random Forest and XGBoost models achieved identical test accuracy. After verifying data splits, preprocessing, and label encodng, we showed that although their overall accuracy was the same, the models made different individual predictions and exhibited distinct class-level behavior. For more details, please visit the tree-based notebook.
 
-<div style="page-break-after: always;"></div>
+Other lifestyle factors, such as "snacking frequency," "vegetable intake," and "physical exercise," showed some predictive power for obesity classes. However, their predictive ability was way lower than that of height and weight in our previous models.
 
 ## 5. Policy Implications and Reflections
 
@@ -429,6 +439,8 @@ TO COMPLETE BY NICO
 - Neural networks were surprisingly manageable and performed well
 - Sharing the same train/test split helped standardize evaluation
 - We improved our understanding of ML pipelines, GitHub collaboration, and reproducibility
+
+THIS PART NEEDS TO BE REVISED IMHO (Nico)
 
 <div style="page-break-after: always;"></div>
 
