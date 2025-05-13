@@ -4,7 +4,7 @@
 
 This project aims to provide ...  
 
-The final report can be accessed here: [pdf](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/report/final_report_first.pdf)[html](https://raw.githack.com/nicolasreichardt/ml-project-obesity-prediction/refs/heads/main/report/final_report_first.html)
+The final report can be accessed here: [.pdf](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/report/final_report_first.pdf), [.html](https://raw.githack.com/nicolasreichardt/ml-project-obesity-prediction/refs/heads/main/report/final_report_first.html)
 
 
 #### Authors
