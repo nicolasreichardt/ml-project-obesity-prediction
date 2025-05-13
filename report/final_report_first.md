@@ -1,6 +1,5 @@
 ![Hertie Logo](images/Hertie_School_of_Governance_logo.png)
 
-<!-- no toc -->
 # Obesity Prediction
 
 ## The Scale Doesn’t Lie — But Does Our Model?
@@ -13,7 +12,7 @@ Hertie School · MDS
 Nadine Daum · Ashley Razo · Jasmin Mehnert · Nicolas Reichardt
 
 GitHub: https://github.com/nicolasreichardt/ml-project-obesity-prediction
-Submission: 12 May 2025
+Submission: 23 May 2025
 
 <div style="page-break-after: always;"></div>
 
@@ -45,11 +44,16 @@ Our best-performing models achieved test accuracy scores above 85%, with interpr
     - [K-Nearest Neighbors (KNN)](#k-nearest-neighbors-knn)
     - [Neural Network](#neural-network)
     - [Tree-Based Models](#tree-based-models)
+      - [Decision Tree Classifier](#decision-tree-classifier)
+      - [Random Forest Classifier](#random-forest-classifier)
+      - [XGBoost Classifier](#xgboost-classifier)
   - [4. Model Comparison](#4-model-comparison)
-    - [Feature Importance – Tree-Based Models](#feature-importance--tree-based-models)
     - [Model Comparison Overview](#model-comparison-overview)
+      - [1. Decision Tree Outperforming Other Models](#1-decision-tree-outperforming-other-models)
+      - [2. Uncommon Training/Test Results](#2-uncommon-trainingtest-results)
+      - [3. Biometric Features vs. Lifestyle Features](#3-biometric-features-vs-lifestyle-features)
     - [Model Comparison with Feature Exclusion](#model-comparison-with-feature-exclusion)
-  - [5. Reflections](#5-reflections)
+  - [5. Policy Implications and Reflections](#5-policy-implications-and-reflections)
   - [Appendix A: Links \& Files](#appendix-a-links--files)
   - [Appendix B: Team Contributions](#appendix-b-team-contributions)
 
@@ -142,17 +146,31 @@ All models used the same preprocessed data for consistency.
 
 - Simple baseline with good interpretability
 
+
+
+
+<div style="page-break-after: always;"></div>
+
 ### Ridge Logistic Regression
 
 📒 [ridge_logistic_regression.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/ridge_logistic_regression.ipynb)
 
 - Regularized version of logistic regression
 
+
+
+<div style="page-break-after: always;"></div>
+
 ### K-Nearest Neighbors (KNN)
 
 📒 [PCA_KNN.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/PCA_KNN.ipynb)
 
 - PCA helped reduce dimensionality and improved KNN performance
+
+
+
+
+<div style="page-break-after: always;"></div>
 
 ### Neural Network
 
@@ -164,12 +182,84 @@ All models used the same preprocessed data for consistency.
 
 ![Neural Network Training Curves](../plots/training_curves_nn.png)
 
+
+
+<div style="page-break-after: always;"></div>
+
 ### Tree-Based Models
 
 📒 [tree-based-models.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/tree-based-models.ipynb)
 
-- Random Forest & XGBoost achieved top performance (~86%)
-- Screen time, calorie tracking, and water intake were key features
+This notebook investigated the use of tree-based machine learning models to classify obesity levels in individuals. Three models were trained and evaluated:
+
+- A **Baseline Decision Tree Classifier**
+- A **Random Forest Classifier**
+- An **XGBoost Classifier**
+
+The best overall test accuracy was achieved by the **Baseline Decision Tree**, with a score of **0.9611**. The **XGBoost Classifier** followed closely with a test accuracy of **0.9574**. The **Random Forest Classifier** achieved a test accuracy of **0.936**. These results show that all three models performed exceptionally well. Below is a more detailed overview of each model and its outcomes.
+
+---
+
+#### Decision Tree Classifier
+
+The Decision Tree model was trained using a pipeline that incorporated preprocessing and grid search for hyperparameter tuning. The best model used:
+
+- **Criterion:** Entropy  
+- **Max Depth:** 15  
+- **Min Samples Split:** 2  
+- **Min Samples Leaf:** 1  
+
+This configuration produced a **cross-validation accuracy of 0.9479** and a **test accuracy of 0.9611**, suggesting that the model generalized very well to unseen data — to an extent that even outperformed its validation score, which is atypical and discussed further in the comparison section.
+
+In terms of feature importance, **biometric features** dominated the predictions:
+
+- **Weight**: 0.625  
+- **Height**: 0.197  
+
+Lifestyle-related features such as “high caloric food intake” played a significantly lesser role.
+
+---
+
+#### Random Forest Classifier
+
+The Random Forest model was also trained using a pipeline with preprocessing and 5-fold cross-validation. The optimal configuration from grid search was:
+
+- **Max Depth:** 20  
+- **Number of Estimators:** 200  
+- **Max Features:** 'sqrt'  
+- **Min Samples Leaf:** 1  
+- **Min Samples Split:** 2  
+
+With these settings, the model achieved a **cross-validation accuracy of approximately 0.935** and a **test accuracy of 0.936**. These results again indicate good generalization with very similar performance on both validation and test sets.
+
+The feature importances mirrored those found in the Decision Tree model. **Weight, height, age, and gender** were the top features, while lifestyle-related variables (e.g., "vegetables_freq") had relatively low importance.
+
+---
+
+#### XGBoost Classifier
+
+Disclaimer:
+  1. XGBoost models can be computationally intensive, especially when using an extensive parameter grid and k-fold cross-validation. Our team experienced computational issues running the models under certain specifications. Therefore, both the n_jobs argument in XGBClassifier (see pipeline) and in GridSearchCV are set to 1. Feel free to change this argument depending on your device's computational power (setting it to -1 will use all available CPU cores).
+  2. Because of changes in the scikit-learn and XGBoost APIs over time, there is a version incompatibility between scikit-learn and the most recent version of XGBoost. As previously stated, it is necessary to use scikit-learn==1.5.2, as specified in the requirements.txt.  
+   
+The XGBoost model was also trained using a pipeline with preprocessing and 5-fold cross-validation. The best model parameters were:
+
+- **Learning Rate:** 0.2  
+- **Max Depth:** 3  
+- **Number of Estimators:** 200  
+
+This configuration resulted in the **highest cross-validation accuracy of 0.9668**, indicating that the model fit the training data extremely well. However, the **test accuracy dropped slightly to 0.9574**, just below the baseline Decision Tree model.
+
+Interestingly, the XGBoost model’s feature importances showed a different pattern:
+
+- Top features included **"female gender"** and **"weight"**  
+- Lifestyle-related variables like **"high caloric food frequency," "alcohol consumption frequency,"** and **"snacking frequency"** appeared in the top five  
+- **"Height"** was notably absent from the most important predictors  
+
+
+The following section will compare and offer an interpretation of these results and the feature importances.
+
+
 
 <div style="page-break-after: always;"></div>
 
@@ -177,28 +267,82 @@ All models used the same preprocessed data for consistency.
 
 | Model                     | Test Accuracy   | Notes                                  |
 | ------------------------- | --------------- | -------------------------------------- |
-| Logistic Regression       | ~75%            | Simple, interpretable                  |
-| Ridge Logistic Regression | ~76%            | Slight improvement with regularization |
-| KNN                       | ~77%            | Better with PCA                        |
+| Logistic Regression       | ~XX%            | Simple, interpretable                  |
+| Ridge Logistic Regression | ~XX%            | Slight improvement with regularization |
+| KNN                       | ~XX%            | Better with PCA                        |
 | Neural Network            | **83.9%** | Strong generalization                  |
-| Random Forest             | ~85–86%        | Robust, interpretable                  |
-| XGBoost                   | ~86%            | Top performer with best generalization |
+| Random Forest             | ~XX%        | Robust, interpretable                  |
+| XGBoost                   | ~XX%            | Top performer with best generalization |
 
-### Feature Importance – Tree-Based Models
 
-![Top Features](../plots/top_features_tree_based_models.png)
+
+We will now compare our three best-performing models: 
+- The **Baseline Decision Tree Classifier**,
+- the **Random Forest Classifier** and
+- the **XGBoost Classifier**.
+
 
 ### Model Comparison Overview
 
+Let's first remind ourselves of the test accuracy of our three models with the following plot.
+
 ![Model Comparison](../plots/tree_based_model_comparison.png)
+
+#### 1. Decision Tree Outperforming Other Models
+In the plot above, we observed that our **baseline Decision Tree classifier** outperformed the more complex models—**Random Forest** and **XGBoost**. Nevertheless, all three models performed exceptionally well in terms of accuracy.
+
+The superior performance of the Decision Tree is not entirely surprising. The relationship between the features and the target variable appears to be relatively simple, allowing for decision boundaries that can be effectively captured by straightforward, rule-based splits. This is particularly true for the predictors **"weight"** and **"height"**, which directly influence the target variable.
+
+As discussed further in the feature importance section, both **height** and **weight** are used to compute the **Body Mass Index (BMI)**, which forms the basis for the obesity classification labels in our target variable. Consequently, these features hold a dominant predictive influence.
+
+While Decision Trees are designed to select and split on features based on their immediate predictive power, **Random Forests** and **XGBoost** attempt to model more complex, non-linear interactions among features. This added complexity may actually reduce their performance in a task where a few features dominate the predictive signal. This could explain why our simpler Decision Tree model outperformed the more advanced ensemble methods in this particular case.
+
+#### 2. Uncommon Training/Test Results
+
+We observed very high testing accuracy and high training/validation accuracy across all three models. In the **Decision Tree Classifier** and **Random Forest Classifier**, the test accuracy was even higher than the training/validation accuracy—an outcome that is quite uncommon and unexpected.
+
+Based on these results, we can exclude the possibility that our models were overfitting. However, this pattern revealed two important issues within the dataset:
+
+1. **Target Leakage via BMI-Related Features**  
+   As previously discussed, the target variable—obesity level—is derived directly from the **Body Mass Index (BMI)**, which is itself calculated using the features **"height"** and **"weight."** Including these features in the model introduced a direct link between inputs and the target, thereby inflating the predictive performance. In essence, the models were not discovering latent behavioral patterns, but rather reverse-engineering the BMI classification from the variables used to compute it.
+
+2. **Synthetic Data and Non-Independent Splits**  
+   A significant portion of the dataset—approximately **77%** of the records—was synthetically generated using the **SMOTE algorithm** to address class imbalance. While SMOTE is effective at improving model robustness, it creates synthetic samples that are interpolated from existing ones. As a result, the **training and test sets are not entirely independent**, which likely reduced the challenge of the prediction task. This may explain why the test set performance matched—or even slightly exceeded—the training/validation accuracy.
+
+These factors highlight potential limitations in model evaluation and suggest caution when interpreting the performance metrics at face value.
+
+
+#### 3. Biometric Features vs. Lifestyle Features
+
+Now, we can compare the feature importances of our three models. Let's remind ourselves of the most important features for each model with the following table.
+
+![Top Features](../plots/top_features_tree_based_models.png)
+
+As highlighted in the individual model analyses, biometric features such as **weight**, **height**, **age**, and **gender** consistently emerged as the most important predictors across all three models. These variables were especially dominant in the Decision Tree and Random Forest models, where they significantly outweighed lifestyle-related variables in their contribution to model accuracy.
+
+However, it is precisely the **lifestyle features**—such as dietary habits, physical activity, alcohol consumption, and snacking frequency—that are of greatest interest from a **public health and policy perspective**. Understanding the influence of these modifiable behaviors is essential for designing effective interventions to combat rising global obesity rates. Unfortunately, their predictive power was masked in the initial models by the overwhelming influence of weight and height, which are used to compute BMI—the very basis of the obesity classification used as our target label.
+
+This creates a **circular relationship** in the model: we use BMI to define obesity levels, and then predict those levels primarily using the features from which BMI is derived. To break this dependency and gain a more policy-relevant understanding of behavioral factors, we re-ran all three models—Decision Tree, Random Forest, and XGBoost—excluding the **weight** and **height** predictors. The results are shown below (in the feature exclusion section).
+
+It is also notable that the **XGBoost model’s feature importance rankings** differed significantly from those of the Decision Tree and Random Forest models, even in the full-feature setting. Specifically, features such as **"height"** and **"age"** were **not** among the top predictors in XGBoost, despite being highly ranked in the other two models. This discrepancy is likely due to how these algorithms handle **correlated or redundant features**.
+
+
+
 
 ### Model Comparison with Feature Exclusion
 
 ![Model Comparison (Excluded Features)](../plots/tree_based_model_comparison_feature_exclusion.png)
 
+TO COMPLETE BY NICO
+
+TO COMPLETE BY NICO
+
+
+
+
 <div style="page-break-after: always;"></div>
 
-## 5. Reflections
+## 5. Policy Implications and Reflections
 
 - Preprocessing made a big difference across all models
 - Tree-based models helped us understand what mattered most
