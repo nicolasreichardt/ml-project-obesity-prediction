@@ -2,16 +2,17 @@
 
 #### Project Overview
 
-This project aims to provide ...
-The final report can be accessed [here](XXXX)
+This project aims to provide ...  
+
+The final report can be accessed here: [pdf](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/report/final_report_first.pdf)[html](https://raw.githack.com/nicolasreichardt/ml-project-obesity-prediction/refs/heads/main/report/final_report_first.html)
 
 
 #### Authors
 
-- **Nadine Daum** [E-Mail](n.daum@students.hertie-school.org) [GitHub](https://github.com/NadineDaum)
-- **Ashley Razo** [E-Mail](a.razo@students.hertie-school.org) [GitHub](https://github.com/ashley-razo)
-- **Jasmin Mehnert** [E-Mail](j.mehnert@students.hertie-school.org) [GitHub](https://github.com/jasmin-mehnert)
-- **Nicolas Reichardt** [E-Mail](n.reichardt@students.hertie-school.org) [GitHub](https://github.com/nicolasreichardt)
+- **Nadine Daum**: [E-Mail](n.daum@students.hertie-school.org), [GitHub](https://github.com/NadineDaum)
+- **Ashley Razo**: [E-Mail](a.razo@students.hertie-school.org), [GitHub](https://github.com/ashley-razo)
+- **Jasmin Mehnert**: [E-Mail](j.mehnert@students.hertie-school.org), [GitHub](https://github.com/jasmin-mehnert)
+- **Nicolas Reichardt**: [E-Mail](n.reichardt@students.hertie-school.org), [GitHub](https://github.com/nicolasreichardt)
 
 #### Data Sources
 
