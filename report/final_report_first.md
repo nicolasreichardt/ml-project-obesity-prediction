@@ -165,10 +165,93 @@ All models used the same preprocessed data for consistency.
 
 📒 [PCA_KNN.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/PCA_KNN.ipynb)
 
-- PCA helped reduce dimensionality and improved KNN performance
+This notebook investigates how dimensionality reduction with Principal Component Analysis (PCA) affects the performance of a K-Nearest Neighbors (KNN) classifier in predicting obesity levels. Four variations of KNN were trained and evaluated:
 
+- A **Baseline KNN Classifier** (with all features, no PCA)  
+- A **KNN Classifier with PCA** 
+- A **KNN Classifier on a reduced feature set** (excluding weight, height, and age)
+- A **KNN Classifier with PCA excluding SMOTE generated data** 
 
+The **best overall test accuracy (0.78)** was achieved **no matter whether we used PCA**. On the full dataset, PCA preserved nearly all variance but did not improve performance over the baseline. The reduced feature model performed significantly worse. Below is a more detailed overview of each approach and its outcomes.
 
+---
+
+### Encoding Strategy
+
+Before model training, a careful encoding approach was applied to ensure distance metrics used by KNN remained meaningful:
+
+- **Binary variables** (e.g., gender, smoking) were mapped to 0 and 1  
+- **Ordinal variables** (e.g., `vegetables_freq`, `physical_activity_freq`) were encoded using manually defined, meaningful level orderings (e.g., *Never* < *Sometimes* < *Always*)  
+
+This ordinal encoding preserved structure while avoiding the sparsity of one-hot encoding. This is particularly important for KNN, as high-dimensionality can dilute the distance signal.
+
+---
+
+### Baseline KNN Classifier (No PCA)
+
+The baseline KNN was trained on all scaled features (excluding `transport_mode`, which had weak correlations with obesity level). The model was tuned via 5-fold cross-validation across values of \( k \). The best model used:
+
+- **k:** 1  
+- **Test Accuracy:** 0.7754  
+
+![](../plots/accuracy_vs_k_no_pca.png)
+
+The high performance at \( k = 1 \) could be explained by the use of SMOTE, which creates synthetic clusters with very tight proximity between samples of the same class. As a result, the nearest neighbor often shares the correct label, while increasing \( k \) introduces less similar neighbors and reduces accuracy.
+
+---
+
+### KNN with PCA
+
+Dimensionality reduction was implemented using a pipeline that included PCA followed by KNN, evaluated using grid search with cross-validation. The best configuration was:
+
+- **k:** 1  
+- **Number of PCA Components:** 15  
+- **Test Accuracy:** 0.7754  
+
+![](../plots/explained_variance_by__pca_components.png)
+
+The number of features got not reduced, therefore PCA preserved all variance from the original data. As a result, model performance remained unchanged. This suggests PCA did not effectively compress the input space.
+
+---
+
+### KNN with Reduced Feature Set
+
+To avoid target leakage, we removed the features weight_kg and height_m, as the target variable (BMI-based obesity level) is directly derived from them via the BMI formula. Including these features would allow the model to trivially reconstruct the label. The final model used:
+
+- **k:** 3  
+- **Test Accuracy:** 0.5934  
+
+![](../plots/knn_accuracy_vs_k_reduced_features.png)  
+![](../plots/model_comparison_pca_knn.png)
+
+This performance drop is expected. However, this version focuses on **modifiable lifestyle variables**, which are more suitable for public health use cases, as they can be self-reported, less privacy sensitive and can be targeted through interventions.
+
+---
+
+### Validation on Real-Only Data
+
+To assess generalizability, the model was re-evaluated on a 23% subset of non-synthetic data. The best KNN+PCA model achieved:
+
+- **k:** 1  
+- **Number of PCA Components:** 15  
+- **Test Accuracy:** 0.8763  
+
+![](../plots/accuracy_vs_k_real_data.png)  
+![](../plots/explained_variance_real_data.png)
+
+This confirms that PCA can be effective in real-world scenarios, helping to reduce noise and correlation while preserving essential structure.
+
+---
+
+### PCA Visualization in 3D
+
+A 3D PCA plot was generated using the first three components. Original features were projected as black arrows to indicate their influence on component directions. Visual inspection showed:
+
+- Features like **vegetables_freq** and **physical_activity_freq** pointed toward key directions of variation  
+- Moderate separation of obesity classes was visible, especially for **extreme categories like Obesity_Type_III**  
+- PCA successfully reduced redundancy and improved interpretability of the input space  
+
+![3D PCA Scatter](../plots/pca_3d_scatter_plot.png)
 
 <div style="page-break-after: always;"></div>
 
