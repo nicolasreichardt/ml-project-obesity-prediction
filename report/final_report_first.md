@@ -1,5 +1,6 @@
-<img src="images/hertie_logo.svg" alt="Hertie Logo" width="90"/>
+![Hertie Logo](images/Hertie_School_of_Governance_logo.png)
 
+<!-- no toc -->
 # Obesity Prediction
 
 ## The Scale Doesn’t Lie — But Does Our Model?
@@ -26,15 +27,31 @@ Our best-performing models achieved test accuracy scores above 85%, with interpr
 
 ## Table of Contents
 
-- [Team](#team)
-- [Project Overview](#project-overview)
-- [1. Dataset Description](#1-dataset-description)
-- [2. Preprocessing &amp; Feature Engineering](#2-preprocessing--feature-engineering)
-- [3. Model Overviews](#3-model-overviews)
-- [4. Model Comparison](#4-model-comparison)
-- [5. Reflections](#5-reflections)
-- [Appendix A: Links &amp; Files](#appendix-a-links--files)
-- [Appendix B: Team Contributions](#appendix-b-team-contributions)
+- [Obesity Prediction](#obesity-prediction)
+  - [The Scale Doesn’t Lie — But Does Our Model?](#the-scale-doesnt-lie--but-does-our-model)
+  - [Summary](#summary)
+  - [Table of Contents](#table-of-contents)
+  - [Team](#team)
+  - [Project Overview](#project-overview)
+  - [1. Dataset Description](#1-dataset-description)
+    - [Dataset Overview:](#dataset-overview)
+  - [2. Preprocessing \& Feature Engineering](#2-preprocessing--feature-engineering)
+    - [Preprocessing Goals](#preprocessing-goals)
+    - [Key Steps](#key-steps)
+    - [Implementation](#implementation)
+  - [3. Model Overviews](#3-model-overviews)
+    - [Logistic Regression](#logistic-regression)
+    - [Ridge Logistic Regression](#ridge-logistic-regression)
+    - [K-Nearest Neighbors (KNN)](#k-nearest-neighbors-knn)
+    - [Neural Network](#neural-network)
+    - [Tree-Based Models](#tree-based-models)
+  - [4. Model Comparison](#4-model-comparison)
+    - [Feature Importance – Tree-Based Models](#feature-importance--tree-based-models)
+    - [Model Comparison Overview](#model-comparison-overview)
+    - [Model Comparison with Feature Exclusion](#model-comparison-with-feature-exclusion)
+  - [5. Reflections](#5-reflections)
+  - [Appendix A: Links \& Files](#appendix-a-links--files)
+  - [Appendix B: Team Contributions](#appendix-b-team-contributions)
 
 ---
 
@@ -145,7 +162,7 @@ All models used the same preprocessed data for consistency.
 - Test accuracy: **83.9%**
 - Balanced performance across all obesity categories
 
-![Neural Network Training Curves](plots/training_curves_nn.png)
+![Neural Network Training Curves](../plots/training_curves_nn.png)
 
 ### Tree-Based Models
 
@@ -169,15 +186,15 @@ All models used the same preprocessed data for consistency.
 
 ### Feature Importance – Tree-Based Models
 
-![Top Features](plots/top_features_tree_based_models.png)
+![Top Features](../plots/top_features_tree_based_models.png)
 
 ### Model Comparison Overview
 
-![Model Comparison](plots/tree_based_model_comparison.png)
+![Model Comparison](../plots/tree_based_model_comparison.png)
 
 ### Model Comparison with Feature Exclusion
 
-![Model Comparison (Excluded Features)](plots/tree_based_model_comparison_feature_exclusion.png)
+![Model Comparison (Excluded Features)](../plots/tree_based_model_comparison_feature_exclusion.png)
 
 <div style="page-break-after: always;"></div>
 
