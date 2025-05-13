@@ -5,11 +5,10 @@
 ## The Scale Doesn’t Lie — But Does Our Model?
 
 **Final Report**
-Supervised Machine Learning · Spring 2025
-Hertie School · MDS
+Machine Learning · Spring 2025
 
 **Authors**
-Nadine Daum · Ashley Razo · Jasmin Mehnert · Nicolas Reichardt
+Nadine Daum · Jasmin Mehnert · Ashley Razo · Nicolas Reichardt
 
 GitHub: https://github.com/nicolasreichardt/ml-project-obesity-prediction
 Submission: 23 May 2025
@@ -279,11 +278,49 @@ A 3D PCA plot was generated using the first three components. Original features 
 
 📒 [neural_network.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/neural_network.ipynb)
 
-- Multi-layer architecture with ReLU and softmax
-- Test accuracy: **83.9%**
-- Balanced performance across all obesity categories
+This notebook implements a multi-layer feedforward neural network for classifying individuals into one of seven obesity categories. The model was built using Keras with a TensorFlow backend and trained on the shared, preprocessed dataset.
 
-![Neural Network Training Curves](../plots/training_curves_nn.png)
+#### Preprocessing & Input Data  
+Neural networks require all inputs to be numeric and appropriately scaled. To meet this requirement:  
+- Categorical variables were **one-hot encoded**, resulting in binary columns representing each category. This expanded the feature space to approximately 43 input dimensions.
+- Numerical features such as `age`, `height_m`, and `weight_kg` were **standardized using `StandardScaler`**, which centers the data and scales to unit variance.
+
+The model architecture consisted of:
+- Two fully connected hidden layers with **ReLU activation**
+- **Dropout layers (rate: 0.3)** for regularization
+- A **softmax output layer** for multi-class classification (7 classes)
+
+The model was trained using:
+- **Loss function**: `categorical_crossentropy`  
+- **Optimizer**: `Adam`  
+- **Epochs**: 50  
+- Target: one-hot encoded labels for `obesity_level`
+
+#### Training Process  
+The model was trained on the shared training set (`train_data.feather`) and evaluated on the standard test set. The training history showed stable convergence of both loss and accuracy, with validation metrics closely tracking the training metrics:
+
+![Training Curve](images/nn_training_curve.png)
+
+No signs of overfitting were observed, likely due to dropout regularization and standardized inputs.
+
+#### Performance Evaluation  
+The neural network achieved a **test accuracy of 83.9%**, making it one of the best-performing models in the overall comparison.
+
+Class-level performance was assessed using a confusion matrix:
+
+![Confusion Matrix](images/nn_confusion_matrix.png)
+
+The model showed strong predictive ability across most classes, with misclassifications primarily occurring between adjacent categories (e.g., Normal Weight and Overweight Level I/II). Performance was especially strong in more distinct categories such as Obesity Type III and Insufficient Weight.
+
+- **Strengths**:
+  - Stable training and generalization to unseen data
+  - Accurate classification across all seven categories
+  - Effective in capturing non-linear relationships in the data
+
+- **Limitations**:
+  - Requires extensive preprocessing (encoding and scaling)
+  - Less interpretable than linear or tree-based models
+  - Sensitive to architecture and hyperparameter choices
 
 <div style="page-break-after: always;"></div>
 
