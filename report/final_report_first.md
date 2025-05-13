@@ -97,8 +97,19 @@ We used the **Obesity Levels Estimation Dataset**, which contains demographic, b
 
 The data was collected via a cross-sectional survey and is publicly available on [Kaggle](https://www.kaggle.com/datasets/ruchikakumbhar/obesity-prediction), supported by this [research article](https://pmc.ncbi.nlm.nih.gov/articles/PMC6710633/).
 
-> 📝 **Jasmin – please add 1–2 sentences here about EDA findings**
-> For example: were there correlations, outliers, imbalances, or interesting clusters?
+### EDA findings:
+
+📒 Notebook: [`notebooks/EDA.ipynb`](notebooks/EDA.ipynb)
+
+Our EDA revealed several interesting patterns in the dataset. Weight exhibited a strong bimodal distribution and was the most predictive feature for distinguishing obesity levels. As expected, higher weight values were clearly associated with higher obesity categories, while height showed minimal variation across groups.
+
+Among the numerical features, age was slightly right-skewed, with a concentration of younger individuals, and showed a mild upward trend in older age groups within higher obesity levels. Several categorical features (e.g., smokes, calorie_tracking) were imbalanced, while lifestyle-related variables like vegetables_freq and physical_activity_freq displayed greater diversity.
+
+Correlation analysis supported these insights: weight had strong positive correlations with Obesity_Type_I and Obesity_Type_II, and a negative correlation with Normal_Weight. Behavioral factors such as vegetable intake, snacking, and screen time showed moderate correlations, suggesting their relevance when combined in a predictive model.
+
+![](../plots/heatmap.png)
+
+### Train/Test Split:
 
 All team members used a shared train/test split to ensure model comparability.
 
@@ -124,8 +135,13 @@ Before modeling, the dataset required thorough cleaning and transformation. This
 - **Train/test split**: 80/20 split applied uniformly to ensure fair model evaluation
 - **File formats**: Datasets exported as both `.csv` and `.feather` (for faster access)
 
+### Data Preprocessing Summary
+
 > 📝 **@Ashley** – feel free to insert 1–2 sentences on your preprocessing pipeline: decisions around feature selection, encoding strategies, or challenges during cleaning
-> 📝 **@Jasmin** – you can briefly note how you supported the pipeline and flag any edge cases or quirks in the data
+
+The preprocessing pipeline ensured consistency and cleanliness of the dataset ahead of modeling. Initially, inconsistencies in categorical encodings were resolved by harmonizing all variables into either clean categorical or numeric formats. Several ordinal features contained unexpected decimal values, likely due to synthetic oversampling (SMOTE). These were systematically rounded to the nearest valid categories and mapped back to interpretable labels, informed by the original survey structure.
+
+All column names were renamed for clarity and uniformity, and a comprehensive data dictionary was created to document question wording and response options. Categorical features were converted to the appropriate category type, while numerical variables were explicitly cast as floats.
 
 ### Implementation
 
