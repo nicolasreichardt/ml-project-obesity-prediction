@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>final_report_first.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<p><img src="images/Hertie_School_of_Governance_logo.png" alt="Hertie Logo"></p>
+<h1 id="obesity-prediction">Obesity Prediction</h1>
+<h2 id="the-scale-doesnt-lie--but-does-our-model">The Scale Doesn’t Lie — But Does Our Model?</h2>
+<p><strong>Final Report</strong>
+Supervised Machine Learning · Spring 2025
+Hertie School · MDS</p>
+<p><strong>Authors</strong>
+Nadine Daum · Ashley Razo · Jasmin Mehnert · Nicolas Reichardt</p>
+<p>GitHub: https://github.com/nicolasreichardt/ml-project-obesity-prediction
+Submission: 23 May 2025</p>
+<div style="page-break-after: always;"></div>
+<h2 id="summary">Summary</h2>
+<p>This project applies supervised machine learning to classify individuals into obesity risk categories based on biometric and lifestyle data. We implemented and evaluated multiple models — including logistic regression, KNN, tree-based models, and a neural network — using a shared preprocessed dataset to ensure consistent and fair comparison.</p>
+<p>Our best-performing models achieved test accuracy scores above 85%, with interpretable insights from tree-based approaches and strong generalization from the neural network.</p>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#obesity-prediction">Obesity Prediction</a>
+<ul>
+<li><a href="#the-scale-doesnt-lie--but-does-our-model">The Scale Doesn’t Lie — But Does Our Model?</a></li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#team">Team</a></li>
+<li><a href="#project-overview">Project Overview</a></li>
+<li><a href="#1-dataset-description">1. Dataset Description</a>
+<ul>
+<li><a href="#dataset-overview">Dataset Overview:</a></li>
+<li><a href="#eda-findings">EDA findings:</a></li>
+<li><a href="#traintest-split">Train/Test Split:</a></li>
+</ul>
+</li>
+<li><a href="#2-preprocessing--feature-engineering">2. Preprocessing &amp; Feature Engineering</a>
+<ul>
+<li><a href="#preprocessing-goals">Preprocessing Goals</a></li>
+<li><a href="#key-steps">Key Steps</a></li>
+<li><a href="#data-preprocessing-summary">Data Preprocessing Summary</a></li>
+<li><a href="#implementation">Implementation</a></li>
+</ul>
+</li>
+<li><a href="#3-model-overviews">3. Model Overviews</a>
+<ul>
+<li><a href="#logistic-regression">Logistic Regression</a></li>
+<li><a href="#ridge-logistic-regression">Ridge Logistic Regression</a></li>
+<li><a href="#k-nearest-neighbors-knn">K-Nearest Neighbors (KNN)</a></li>
+<li><a href="#encoding-strategy">Encoding Strategy</a></li>
+<li><a href="#baseline-knn-classifier-no-pca">Baseline KNN Classifier (No PCA)</a></li>
+<li><a href="#knn-with-pca">KNN with PCA</a></li>
+<li><a href="#knn-with-reduced-feature-set">KNN with Reduced Feature Set</a></li>
+<li><a href="#validation-on-real-only-data">Validation on Real-Only Data</a></li>
+<li><a href="#pca-visualization-in-3d">PCA Visualization in 3D</a></li>
+<li><a href="#neural-network">Neural Network</a></li>
+<li><a href="#tree-based-models">Tree-Based Models</a>
+<ul>
+<li><a href="#decision-tree-classifier">Decision Tree Classifier</a></li>
+<li><a href="#random-forest-classifier">Random Forest Classifier</a></li>
+<li><a href="#xgboost-classifier">XGBoost Classifier</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#4-model-comparison">4. Model Comparison</a>
+<ul>
+<li><a href="#model-comparison-overview">Model Comparison Overview</a>
+<ul>
+<li><a href="#1-decision-tree-outperforming-other-models">1. Decision Tree Outperforming Other Models</a></li>
+<li><a href="#2-uncommon-trainingtest-results">2. Uncommon Training/Test Results</a></li>
+<li><a href="#3-biometric-features-vs-lifestyle-features">3. Biometric Features vs. Lifestyle Features</a></li>
+</ul>
+</li>
+<li><a href="#model-comparison-with-feature-exclusion">Model Comparison with Feature Exclusion</a></li>
+</ul>
+</li>
+<li><a href="#5-policy-implications-and-reflections">5. Policy Implications and Reflections</a></li>
+<li><a href="#appendix-a-links--files">Appendix A: Links &amp; Files</a></li>
+<li><a href="#appendix-b-team-contributions">Appendix B: Team Contributions</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="team">Team</h2>
+<ul>
+<li>Nadine Daum – <a href="https://github.com/NadineDaum">GitHub</a> | <a href="mailto:n.daum@students.hertie-school.org">Email</a></li>
+<li>Jasmin Mehnert – <a href="https://github.com/jasmin-mehnert">GitHub</a> | <a href="mailto:j.mehnert@students.hertie-school.org">Email</a></li>
+<li>Ashley Razo – <a href="https://github.com/ashley-razo">GitHub</a> | <a href="mailto:a.razo@students.hertie-school.org">Email</a></li>
+<li>Nicolas Reichardt – <a href="https://github.com/nicolasreichardt">GitHub</a> | <a href="mailto:n.reichardt@students.hertie-school.org">Email</a></li>
+</ul>
+<h2 id="project-overview">Project Overview</h2>
+<p>This project aims to classify individuals into seven obesity risk categories based on various biometric and behavioral factors. Using a labeled dataset of 2,111 individuals from Mexico, Peru, and Colombia, our models predict obesity levels ranging from <em>Insufficient Weight</em> to <em>Obesity Type III</em>.</p>
+<p>The goal is to explore how well machine learning models can predict obesity status — and how these predictions might support future public health decisions, risk assessment tools, or individual recommendations.</p>
+<p>GitHub repo: <a href="https://github.com/nicolasreichardt/ml-project-obesity-prediction">nicolasreichardt/ml-project-obesity-prediction</a></p>
+<div style="page-break-after: always;"></div>
+<h2 id="1-dataset-description">1. Dataset Description</h2>
+<p>We used the <strong>Obesity Levels Estimation Dataset</strong>, which contains demographic, behavioral, and biometric data for 2,111 individuals from Mexico, Peru, and Colombia. The dataset was designed for multi-class classification and is labeled with 7 obesity categories.</p>
+<h3 id="dataset-overview">Dataset Overview:</h3>
+<ul>
+<li><strong>Size</strong>: 2,111 samples × 17 features + 1 target</li>
+<li><strong>Features</strong>: mix of categorical (e.g., gender, transport_mode) and numerical (e.g., height, weight, age)</li>
+<li><strong>Target variable</strong>: <code>obesity_level</code> with 7 classes:
+<ul>
+<li>Insufficient Weight</li>
+<li>Normal Weight</li>
+<li>Overweight Level I</li>
+<li>Overweight Level II</li>
+<li>Obesity Type I</li>
+<li>Obesity Type II</li>
+<li>Obesity Type III</li>
+</ul>
+</li>
+<li><strong>ML relevance</strong>: Multi-class classification task with imbalanced class distribution</li>
+<li><strong>Input shape for models</strong>: ~43 features after encoding (based on one-hot transformation)</li>
+</ul>
+<p>The data was collected via a cross-sectional survey and is publicly available on <a href="https://www.kaggle.com/datasets/ruchikakumbhar/obesity-prediction">Kaggle</a>, supported by this <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6710633/">research article</a>.</p>
+<h3 id="eda-findings">EDA findings:</h3>
+<p>📒 Notebook: <a href="notebooks/EDA.ipynb"><code>notebooks/EDA.ipynb</code></a></p>
+<p>Our EDA revealed several interesting patterns in the dataset. Weight exhibited a strong bimodal distribution and was the most predictive feature for distinguishing obesity levels. As expected, higher weight values were clearly associated with higher obesity categories, while height showed minimal variation across groups.</p>
+<p>Among the numerical features, age was slightly right-skewed, with a concentration of younger individuals, and showed a mild upward trend in older age groups within higher obesity levels. Several categorical features (e.g., smokes, calorie_tracking) were imbalanced, while lifestyle-related variables like vegetables_freq and physical_activity_freq displayed greater diversity.</p>
+<p>Correlation analysis supported these insights: weight had strong positive correlations with Obesity_Type_I and Obesity_Type_II, and a negative correlation with Normal_Weight. Behavioral factors such as vegetable intake, snacking, and screen time showed moderate correlations, suggesting their relevance when combined in a predictive model.</p>
+<p><img src="../plots/heatmap.png" alt=""></p>
+<h3 id="traintest-split">Train/Test Split:</h3>
+<p>All team members used a shared train/test split to ensure model comparability.</p>
+<div style="page-break-after: always;"></div>
+<h2 id="2-preprocessing--feature-engineering">2. Preprocessing &amp; Feature Engineering</h2>
+<p>Before modeling, the dataset required thorough cleaning and transformation. This step was led primarily by <strong>Ashley Razo</strong> and <strong>Jasmin Mehnert</strong>, with feedback and reviews from all team members.</p>
+<h3 id="preprocessing-goals">Preprocessing Goals</h3>
+<ul>
+<li>Ensure consistent input format across models</li>
+<li>Improve model performance and comparability</li>
+<li>Reduce noise, redundancy, and scaling-related bias</li>
+</ul>
+<h3 id="key-steps">Key Steps</h3>
+<ul>
+<li><strong>Feature selection</strong>: Retained 17 relevant input features capturing diet, behavior, and biometrics</li>
+<li><strong>Target formatting</strong>: Standardized and renamed the class column to <code>obesity_level</code></li>
+<li><strong>Encoding</strong>: Applied one-hot encoding to 13 categorical features (e.g., <code>gender</code>, <code>transport_mode</code>)</li>
+<li><strong>Scaling</strong>: Used <code>StandardScaler</code> to normalize all numerical features (e.g., <code>age</code>, <code>height_m</code>, <code>weight_kg</code>)</li>
+<li><strong>Output dimensions</strong>: Final input to the models included ~43 encoded features</li>
+<li><strong>Train/test split</strong>: 80/20 split applied uniformly to ensure fair model evaluation</li>
+<li><strong>File formats</strong>: Datasets exported as both <code>.csv</code> and <code>.feather</code> (for faster access)</li>
+</ul>
+<h3 id="data-preprocessing-summary">Data Preprocessing Summary</h3>
+<blockquote>
+<p>📝 <strong>@Ashley</strong> – feel free to insert 1–2 sentences on your preprocessing pipeline: decisions around feature selection, encoding strategies, or challenges during cleaning</p>
+</blockquote>
+<p>The preprocessing pipeline ensured consistency and cleanliness of the dataset ahead of modeling. Initially, inconsistencies in categorical encodings were resolved by harmonizing all variables into either clean categorical or numeric formats. Several ordinal features contained unexpected decimal values, likely due to synthetic oversampling (SMOTE). These were systematically rounded to the nearest valid categories and mapped back to interpretable labels, informed by the original survey structure.</p>
+<p>All column names were renamed for clarity and uniformity, and a comprehensive data dictionary was created to document question wording and response options. Categorical features were converted to the appropriate category type, while numerical variables were explicitly cast as floats.</p>
+<h3 id="implementation">Implementation</h3>
+<p>📒 Notebook: <a href="notebooks/preprocessing.ipynb"><code>notebooks/preprocessing.ipynb</code></a>
+🧾 Script: <a href="processed_data/data_preparation.py"><code>processed_data/data_preparation.py</code></a></p>
+<p>All models consumed the same cleaned and scaled training and testing data.</p>
+<div style="page-break-after: always;"></div>
+<h2 id="3-model-overviews">3. Model Overviews</h2>
+<p>All models used the same preprocessed data for consistency.</p>
+<h3 id="logistic-regression">Logistic Regression</h3>
+<p>📒 <a href="https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/logistic_regression.ipynb">logistic_regression.ipynb</a></p>
+<ul>
+<li>Simple baseline with good interpretability</li>
+</ul>
+<div style="page-break-after: always;"></div>
+<h3 id="ridge-logistic-regression">Ridge Logistic Regression</h3>
+<p>📒 <a href="https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/ridge_logistic_regression.ipynb">ridge_logistic_regression.ipynb</a></p>
+<ul>
+<li>Regularized version of logistic regression</li>
+</ul>
+<div style="page-break-after: always;"></div>
+<h3 id="k-nearest-neighbors-knn">K-Nearest Neighbors (KNN)</h3>
+<p>📒 <a href="https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/PCA_KNN.ipynb">PCA_KNN.ipynb</a></p>
+<p>This notebook investigates how dimensionality reduction with Principal Component Analysis (PCA) affects the performance of a K-Nearest Neighbors (KNN) classifier in predicting obesity levels. Four variations of KNN were trained and evaluated:</p>
+<ul>
+<li>A <strong>Baseline KNN Classifier</strong> (with all features, no PCA)</li>
+<li>A <strong>KNN Classifier with PCA</strong></li>
+<li>A <strong>KNN Classifier on a reduced feature set</strong> (excluding weight, height, and age)</li>
+<li>A <strong>KNN Classifier with PCA excluding SMOTE generated data</strong></li>
+</ul>
+<p>The <strong>best overall test accuracy (0.78)</strong> was achieved <strong>no matter whether we used PCA</strong>. On the full dataset, PCA preserved nearly all variance but did not improve performance over the baseline. The reduced feature model performed significantly worse. Below is a more detailed overview of each approach and its outcomes.</p>
+<hr>
+<h3 id="encoding-strategy">Encoding Strategy</h3>
+<p>Before model training, a careful encoding approach was applied to ensure distance metrics used by KNN remained meaningful:</p>
+<ul>
+<li><strong>Binary variables</strong> (e.g., gender, smoking) were mapped to 0 and 1</li>
+<li><strong>Ordinal variables</strong> (e.g., <code>vegetables_freq</code>, <code>physical_activity_freq</code>) were encoded using manually defined, meaningful level orderings (e.g., <em>Never</em> &lt; <em>Sometimes</em> &lt; <em>Always</em>)</li>
+</ul>
+<p>This ordinal encoding preserved structure while avoiding the sparsity of one-hot encoding. This is particularly important for KNN, as high-dimensionality can dilute the distance signal.</p>
+<hr>
+<h3 id="baseline-knn-classifier-no-pca">Baseline KNN Classifier (No PCA)</h3>
+<p>The baseline KNN was trained on all scaled features (excluding <code>transport_mode</code>, which had weak correlations with obesity level). The model was tuned via 5-fold cross-validation across values of ( k ). The best model used:</p>
+<ul>
+<li><strong>k:</strong> 1</li>
+<li><strong>Test Accuracy:</strong> 0.7754</li>
+</ul>
+<p><img src="../plots/accuracy_vs_k_no_pca.png" alt=""></p>
+<p>The high performance at ( k = 1 ) could be explained by the use of SMOTE, which creates synthetic clusters with very tight proximity between samples of the same class. As a result, the nearest neighbor often shares the correct label, while increasing ( k ) introduces less similar neighbors and reduces accuracy.</p>
+<hr>
+<h3 id="knn-with-pca">KNN with PCA</h3>
+<p>Dimensionality reduction was implemented using a pipeline that included PCA followed by KNN, evaluated using grid search with cross-validation. The best configuration was:</p>
+<ul>
+<li><strong>k:</strong> 1</li>
+<li><strong>Number of PCA Components:</strong> 15</li>
+<li><strong>Test Accuracy:</strong> 0.7754</li>
+</ul>
+<p><img src="../plots/explained_variance_by_pca_components.png" alt=""></p>
+<p>The number of features got not reduced, therefore PCA preserved all variance from the original data. As a result, model performance remained unchanged. This suggests PCA did not effectively compress the input space.</p>
+<hr>
+<h3 id="knn-with-reduced-feature-set">KNN with Reduced Feature Set</h3>
+<p>To avoid target leakage, we removed the features weight_kg and height_m, as the target variable (BMI-based obesity level) is directly derived from them via the BMI formula. Including these features would allow the model to trivially reconstruct the label. The final model used:</p>
+<ul>
+<li><strong>k:</strong> 3</li>
+<li><strong>Test Accuracy:</strong> 0.5934</li>
+</ul>
+<p><img src="../plots/accuracy_vs_k_reduced_features.png" alt="">
+<img src="../plots/model_comparison_knn_pca.png" alt=""></p>
+<p>This performance drop is expected. However, this version focuses on <strong>modifiable lifestyle variables</strong>, which are more suitable for public health use cases, as they can be self-reported, less privacy sensitive and can be targeted through interventions.</p>
+<hr>
+<h3 id="validation-on-real-only-data">Validation on Real-Only Data</h3>
+<p>To assess generalizability, the model was re-evaluated on a 23% subset of non-synthetic data. The best KNN+PCA model achieved:</p>
+<ul>
+<li><strong>k:</strong> 1</li>
+<li><strong>Number of PCA Components:</strong> 15</li>
+<li><strong>Test Accuracy:</strong> 0.8763</li>
+</ul>
+<p><img src="../plots/accuracy_vs_k_real_data.png" alt="">
+<img src="../plots/explained_variance_real_data.png" alt=""></p>
+<p>This confirms that PCA can be effective in real-world scenarios, helping to reduce noise and correlation while preserving essential structure.</p>
+<hr>
+<h3 id="pca-visualization-in-3d">PCA Visualization in 3D</h3>
+<p>A 3D PCA plot was generated using the first three components. Original features were projected as black arrows to indicate their influence on component directions. Visual inspection showed:</p>
+<ul>
+<li>Features like <strong>vegetables_freq</strong> and <strong>physical_activity_freq</strong> pointed toward key directions of variation</li>
+<li>Moderate separation of obesity classes was visible, especially for <strong>extreme categories like Obesity_Type_III</strong></li>
+<li>PCA successfully reduced redundancy and improved interpretability of the input space</li>
+</ul>
+<p><img src="../plots/pca_3d_scatter_plot.png" alt="3D PCA Scatter"></p>
+<div style="page-break-after: always;"></div>
+<h3 id="neural-network">Neural Network</h3>
+<p>📒 <a href="https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/neural_network.ipynb">neural_network.ipynb</a></p>
+<ul>
+<li>Multi-layer architecture with ReLU and softmax</li>
+<li>Test accuracy: <strong>83.9%</strong></li>
+<li>Balanced performance across all obesity categories</li>
+</ul>
+<p><img src="../plots/training_curves_nn.png" alt="Neural Network Training Curves"></p>
+<div style="page-break-after: always;"></div>
+<h3 id="tree-based-models">Tree-Based Models</h3>
+<p>📒 <a href="https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/tree-based-models.ipynb">tree-based-models.ipynb</a></p>
+<p>This notebook investigated the use of tree-based machine learning models to classify obesity levels in individuals. Three models were trained and evaluated:</p>
+<ul>
+<li>A <strong>Baseline Decision Tree Classifier</strong></li>
+<li>A <strong>Random Forest Classifier</strong></li>
+<li>An <strong>XGBoost Classifier</strong></li>
+</ul>
+<p>The best overall test accuracy was achieved by the <strong>Baseline Decision Tree</strong>, with a score of <strong>0.9611</strong>. The <strong>XGBoost Classifier</strong> followed closely with a test accuracy of <strong>0.9574</strong>. The <strong>Random Forest Classifier</strong> achieved a test accuracy of <strong>0.936</strong>. These results show that all three models performed exceptionally well. Below is a more detailed overview of each model and its outcomes.</p>
+<hr>
+<h4 id="decision-tree-classifier">Decision Tree Classifier</h4>
+<p>The Decision Tree model was trained using a pipeline that incorporated preprocessing and grid search for hyperparameter tuning. The best model used:</p>
+<ul>
+<li><strong>Criterion:</strong> Entropy</li>
+<li><strong>Max Depth:</strong> 15</li>
+<li><strong>Min Samples Split:</strong> 2</li>
+<li><strong>Min Samples Leaf:</strong> 1</li>
+</ul>
+<p>This configuration produced a <strong>cross-validation accuracy of 0.9479</strong> and a <strong>test accuracy of 0.9611</strong>, suggesting that the model generalized very well to unseen data — to an extent that even outperformed its validation score, which is atypical and discussed further in the comparison section.</p>
+<p>In terms of feature importance, <strong>biometric features</strong> dominated the predictions:</p>
+<ul>
+<li><strong>Weight</strong>: 0.625</li>
+<li><strong>Height</strong>: 0.197</li>
+</ul>
+<p>Lifestyle-related features such as “high caloric food intake” played a significantly lesser role.</p>
+<hr>
+<h4 id="random-forest-classifier">Random Forest Classifier</h4>
+<p>The Random Forest model was also trained using a pipeline with preprocessing and 5-fold cross-validation. The optimal configuration from grid search was:</p>
+<ul>
+<li><strong>Max Depth:</strong> 20</li>
+<li><strong>Number of Estimators:</strong> 200</li>
+<li><strong>Max Features:</strong> 'sqrt'</li>
+<li><strong>Min Samples Leaf:</strong> 1</li>
+<li><strong>Min Samples Split:</strong> 2</li>
+</ul>
+<p>With these settings, the model achieved a <strong>cross-validation accuracy of approximately 0.935</strong> and a <strong>test accuracy of 0.936</strong>. These results again indicate good generalization with very similar performance on both validation and test sets.</p>
+<p>The feature importances mirrored those found in the Decision Tree model. <strong>Weight, height, age, and gender</strong> were the top features, while lifestyle-related variables (e.g., &quot;vegetables_freq&quot;) had relatively low importance.</p>
+<hr>
+<h4 id="xgboost-classifier">XGBoost Classifier</h4>
+<p>Disclaimer:</p>
+<ol>
+<li>XGBoost models can be computationally intensive, especially when using an extensive parameter grid and k-fold cross-validation. Our team experienced computational issues running the models under certain specifications. Therefore, both the n_jobs argument in XGBClassifier (see pipeline) and in GridSearchCV are set to 1. Feel free to change this argument depending on your device's computational power (setting it to -1 will use all available CPU cores).</li>
+<li>Because of changes in the scikit-learn and XGBoost APIs over time, there is a version incompatibility between scikit-learn and the most recent version of XGBoost. As previously stated, it is necessary to use scikit-learn==1.5.2, as specified in the requirements.txt.</li>
+</ol>
+<p>The XGBoost model was also trained using a pipeline with preprocessing and 5-fold cross-validation. The best model parameters were:</p>
+<ul>
+<li><strong>Learning Rate:</strong> 0.2</li>
+<li><strong>Max Depth:</strong> 3</li>
+<li><strong>Number of Estimators:</strong> 200</li>
+</ul>
+<p>This configuration resulted in the <strong>highest cross-validation accuracy of 0.9668</strong>, indicating that the model fit the training data extremely well. However, the <strong>test accuracy dropped slightly to 0.9574</strong>, just below the baseline Decision Tree model.</p>
+<p>Interestingly, the XGBoost model’s feature importances showed a different pattern:</p>
+<ul>
+<li>Top features included <strong>&quot;female gender&quot;</strong> and <strong>&quot;weight&quot;</strong></li>
+<li>Lifestyle-related variables like <strong>&quot;high caloric food frequency,&quot; &quot;alcohol consumption frequency,&quot;</strong> and <strong>&quot;snacking frequency&quot;</strong> appeared in the top five</li>
+<li><strong>&quot;Height&quot;</strong> was notably absent from the most important predictors</li>
+</ul>
+<p>The following section will compare and offer an interpretation of these results and the feature importances.</p>
+<div style="page-break-after: always;"></div>
+<h2 id="4-model-comparison">4. Model Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Test Accuracy</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logistic Regression</td>
+<td>~XX%</td>
+<td>Simple, interpretable</td>
+</tr>
+<tr>
+<td>Ridge Logistic Regression</td>
+<td>~XX%</td>
+<td>Slight improvement with regularization</td>
+</tr>
+<tr>
+<td>KNN</td>
+<td>~XX%</td>
+<td>Better with PCA</td>
+</tr>
+<tr>
+<td>Neural Network</td>
+<td>83.9%</td>
+<td>Strong generalization</td>
+</tr>
+<tr>
+<td>Baseline Decision Tree</td>
+<td>96.45%</td>
+<td>XXX</td>
+</tr>
+<tr>
+<td>Random Forest</td>
+<td>93.62%</td>
+<td>XXX</td>
+</tr>
+<tr>
+<td>XGBoost</td>
+<td>95.74%</td>
+<td>XXX</td>
+</tr>
+</tbody>
+</table>
+<p>We will now compare our three best-performing models:</p>
+<ul>
+<li>The <strong>Baseline Decision Tree Classifier</strong>,</li>
+<li>the <strong>Random Forest Classifier</strong> and</li>
+<li>the <strong>XGBoost Classifier</strong>.</li>
+</ul>
+<h3 id="model-comparison-overview">Model Comparison Overview</h3>
+<p>Let's first remind ourselves of the test accuracy of our three models with the following plot.</p>
+<p><img src="../plots/tree_based_model_comparison.png" alt="Model Comparison"></p>
+<h4 id="1-decision-tree-outperforming-other-models">1. Decision Tree Outperforming Other Models</h4>
+<p>In the plot above, we observed that our <strong>baseline Decision Tree classifier</strong> outperformed the more complex models—<strong>Random Forest</strong> and <strong>XGBoost</strong>. Nevertheless, all three models performed exceptionally well in terms of accuracy.</p>
+<p>The superior performance of the Decision Tree is not entirely surprising. The relationship between the features and the target variable appears to be relatively simple, allowing for decision boundaries that can be effectively captured by straightforward, rule-based splits. This is particularly true for the predictors <strong>&quot;weight&quot;</strong> and <strong>&quot;height&quot;</strong>, which directly influence the target variable.</p>
+<p>As discussed further in the feature importance section, both <strong>height</strong> and <strong>weight</strong> are used to compute the <strong>Body Mass Index (BMI)</strong>, which forms the basis for the obesity classification labels in our target variable. Consequently, these features hold a dominant predictive influence.</p>
+<p>While Decision Trees are designed to select and split on features based on their immediate predictive power, <strong>Random Forests</strong> and <strong>XGBoost</strong> attempt to model more complex, non-linear interactions among features. This added complexity may actually reduce their performance in a task where a few features dominate the predictive signal. This could explain why our simpler Decision Tree model outperformed the more advanced ensemble methods in this particular case.</p>
+<h4 id="2-uncommon-trainingtest-results">2. Uncommon Training/Test Results</h4>
+<p>We observed very high testing accuracy and high training/validation accuracy across all three models. In the <strong>Decision Tree Classifier</strong> and <strong>Random Forest Classifier</strong>, the test accuracy was even higher than the training/validation accuracy—an outcome that is quite uncommon and unexpected.</p>
+<p>Based on these results, we can exclude the possibility that our models were overfitting. However, this pattern revealed two important issues within the dataset:</p>
+<ol>
+<li><strong>Target Leakage via BMI-Related Features</strong>As previously discussed, the target variable—obesity level—is derived directly from the <strong>Body Mass Index (BMI)</strong>, which is itself calculated using the features <strong>&quot;height&quot;</strong> and <strong>&quot;weight.&quot;</strong> Including these features in the model introduced a direct link between inputs and the target, thereby inflating the predictive performance. In essence, the models were not discovering latent behavioral patterns, but rather reverse-engineering the BMI classification from the variables used to compute it.</li>
+<li><strong>Synthetic Data and Non-Independent Splits</strong>
+A significant portion of the dataset—approximately <strong>77%</strong> of the records—was synthetically generated using the <strong>SMOTE algorithm</strong> to address class imbalance. While SMOTE is effective at improving model robustness, it creates synthetic samples that are interpolated from existing ones. As a result, the <strong>training and test sets are not entirely independent</strong>, which likely reduced the challenge of the prediction task. This may explain why the test set performance matched—or even slightly exceeded—the training/validation accuracy.</li>
+</ol>
+<p>These factors highlight potential limitations in model evaluation and suggest caution when interpreting the performance metrics at face value.</p>
+<h4 id="3-biometric-features-vs-lifestyle-features">3. Biometric Features vs. Lifestyle Features</h4>
+<p>Now, we can compare the feature importances of our three models. Let's remind ourselves of the most important features for each model with the following table.</p>
+<p><img src="../plots/top_features_tree_based_models.png" alt="Top Features"></p>
+<p>As highlighted in the individual model analyses, biometric features such as <strong>weight</strong>, <strong>height</strong>, <strong>age</strong>, and <strong>gender</strong> consistently emerged as the most important predictors across all three models. These variables were especially dominant in the Decision Tree and Random Forest models, where they significantly outweighed lifestyle-related variables in their contribution to model accuracy.</p>
+<p>However, it is precisely the <strong>lifestyle features</strong>—such as dietary habits, physical activity, alcohol consumption, and snacking frequency—that are of greatest interest from a <strong>public health and policy perspective</strong>. Understanding the influence of these modifiable behaviors is essential for designing effective interventions to combat rising global obesity rates. Unfortunately, their predictive power was masked in the initial models by the overwhelming influence of weight and height, which are used to compute BMI—the very basis of the obesity classification used as our target label.</p>
+<p>This creates a <strong>circular relationship</strong> in the model: we use BMI to define obesity levels, and then predict those levels primarily using the features from which BMI is derived. To break this dependency and gain a more policy-relevant understanding of behavioral factors, we re-ran all three models—Decision Tree, Random Forest, and XGBoost—excluding the <strong>weight</strong> and <strong>height</strong> predictors. The results are shown below (in the feature exclusion section).</p>
+<p>It is also notable that the <strong>XGBoost model’s feature importance rankings</strong> differed significantly from those of the Decision Tree and Random Forest models, even in the full-feature setting. Specifically, features such as <strong>&quot;height&quot;</strong> and <strong>&quot;age&quot;</strong> were <strong>not</strong> among the top predictors in XGBoost, despite being highly ranked in the other two models. This discrepancy is likely due to how these algorithms handle <strong>correlated or redundant features</strong>.</p>
+<h3 id="model-comparison-with-feature-exclusion">Model Comparison with Feature Exclusion</h3>
+<p><img src="../plots/tree_based_model_comparison_feature_exclusion.png" alt="Model Comparison (Excluded Features)"></p>
+<p>As expected, removing the &quot;height&quot; and &quot;weight&quot; features caused a significant drop in model performance. The baseline Decision Tree's accuracy decreased from 0.965 to 0.716, the Random Forest's dropped from 0.936 to 0.79, and the XGBoost model fell from 0.957 to 0.79. These reductions limited the models' accuracy and practical utility.</p>
+<p>Notably, both the Random Forest and XGBoost models achieved identical test accuracy. After verifying data splits, preprocessing, and label encodng, we showed that although their overall accuracy was the same, the models made different individual predictions and exhibited distinct class-level behavior. For more details, please visit the tree-based notebook.</p>
+<p>Other lifestyle factors, such as &quot;snacking frequency,&quot; &quot;vegetable intake,&quot; and &quot;physical exercise,&quot; showed some predictive power for obesity classes. However, their predictive ability was way lower than that of height and weight in our previous models.</p>
+<h2 id="5-policy-implications-and-reflections">5. Policy Implications and Reflections</h2>
+<ul>
+<li>Preprocessing made a big difference across all models</li>
+<li>Tree-based models helped us understand what mattered most</li>
+<li>Neural networks were surprisingly manageable and performed well</li>
+<li>Sharing the same train/test split helped standardize evaluation</li>
+<li>We improved our understanding of ML pipelines, GitHub collaboration, and reproducibility</li>
+</ul>
+<p>THIS PART NEEDS TO BE REVISED IMHO (Nico)</p>
+<div style="page-break-after: always;"></div>
+<h2 id="appendix-a-links--files">Appendix A: Links &amp; Files</h2>
+<ul>
+<li><strong>GitHub Repository</strong>: <a href="https://github.com/nicolasreichardt/ml-project-obesity-prediction">nicolasreichardt/ml-project-obesity-prediction</a></li>
+<li><strong>Cleaned dataset (CSV)</strong>: <code>processed_data/obesity_cleaned.csv</code></li>
+<li><strong>Train/Test files</strong>:
+<ul>
+<li><code>processed_data/train_data.feather</code></li>
+<li><code>processed_data/test_data.feather</code></li>
+</ul>
+</li>
+<li><strong>Model notebooks</strong>: in <code>notebooks/</code></li>
+<li><strong>Generated plots</strong>: in <code>plots/</code></li>
+</ul>
+<h2 id="appendix-b-team-contributions">Appendix B: Team Contributions</h2>
+<ul>
+<li><strong>Nadine Daum</strong> – Neural network, Ridge/Lasso regression</li>
+<li><strong>Ashley Razo</strong> – Preprocessing, logistic regression</li>
+<li><strong>Jasmin Mehnert</strong> – PCA &amp; KNN, preprocessing support</li>
+<li><strong>Nicolas Reichardt</strong> – Random Forest, XGBoost, evaluation
+All team members contributed to meetings, reviews, and report writing.</li>
+</ul>
+
+</body>
+</html>
