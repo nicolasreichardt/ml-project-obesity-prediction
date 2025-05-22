@@ -38,6 +38,7 @@ More information on this issue and the modelling and performance of our models c
 
 #### Project Structure  
 
+```
 ML-PROJECT-OBESITY-PREDICTION/
 ├── notebooks/
 │   ├── EDA.ipynb
@@ -62,6 +63,7 @@ ML-PROJECT-OBESITY-PREDICTION/
 ├── LICENSE
 ├── README.md
 └── requirements.txt  
+```
 
 
 #### Authors
