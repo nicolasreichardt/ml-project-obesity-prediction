@@ -51,6 +51,9 @@ Our best-performing models achieved test accuracy scores above 85%, with interpr
     - [Validation on Real-Only Data](#validation-on-real-only-data)
     - [PCA Visualization in 3D](#pca-visualization-in-3d)
     - [Neural Network](#neural-network)
+      - [Preprocessing \& Input Data](#preprocessing--input-data)
+      - [Training Process](#training-process)
+      - [Performance Evaluation](#performance-evaluation)
     - [Tree-Based Models](#tree-based-models)
       - [Decision Tree Classifier](#decision-tree-classifier)
       - [Random Forest Classifier](#random-forest-classifier)
@@ -280,44 +283,53 @@ A 3D PCA plot was generated using the first three components. Original features 
 
 This notebook implements a multi-layer feedforward neural network for classifying individuals into one of seven obesity categories. The model was built using Keras with a TensorFlow backend and trained on the shared, preprocessed dataset.
 
-#### Preprocessing & Input Data  
-Neural networks require all inputs to be numeric and appropriately scaled. To meet this requirement:  
+#### Preprocessing & Input Data
+
+Neural networks require all inputs to be numeric and appropriately scaled. To meet this requirement:
+
 - Categorical variables were **one-hot encoded**, resulting in binary columns representing each category. This expanded the feature space to approximately 43 input dimensions.
 - Numerical features such as `age`, `height_m`, and `weight_kg` were **standardized using `StandardScaler`**, which centers the data and scales to unit variance.
 
 The model architecture consisted of:
+
 - Two fully connected hidden layers with **ReLU activation**
 - **Dropout layers (rate: 0.3)** for regularization
 - A **softmax output layer** for multi-class classification (7 classes)
 
 The model was trained using:
-- **Loss function**: `categorical_crossentropy`  
-- **Optimizer**: `Adam`  
-- **Epochs**: 50  
+
+- **Loss function**: `categorical_crossentropy`
+- **Optimizer**: `Adam`
+- **Epochs**: 50
 - Target: one-hot encoded labels for `obesity_level`
 
-#### Training Process  
+#### Training Process
+
 The model was trained on the shared training set (`train_data.feather`) and evaluated on the standard test set. The training history showed stable convergence of both loss and accuracy, with validation metrics closely tracking the training metrics:
 
-![Training Curve](images/nn_training_curve.png)
+![Training Curve](../plots/nn_training_curve.png)
+  
+  images/nn_training_curve.png)
 
 No signs of overfitting were observed, likely due to dropout regularization and standardized inputs.
 
-#### Performance Evaluation  
+#### Performance Evaluation
+
 The neural network achieved a **test accuracy of 83.9%**, making it one of the best-performing models in the overall comparison.
 
 Class-level performance was assessed using a confusion matrix:
 
-![Confusion Matrix](images/nn_confusion_matrix.png)
+![Confusion Matrix](../plots/nn_confusion_matrix.png)
 
 The model showed strong predictive ability across most classes, with misclassifications primarily occurring between adjacent categories (e.g., Normal Weight and Overweight Level I/II). Performance was especially strong in more distinct categories such as Obesity Type III and Insufficient Weight.
 
 - **Strengths**:
+
   - Stable training and generalization to unseen data
   - Accurate classification across all seven categories
   - Effective in capturing non-linear relationships in the data
-
 - **Limitations**:
+
   - Requires extensive preprocessing (encoding and scaling)
   - Less interpretable than linear or tree-based models
   - Sensitive to architecture and hyperparameter choices
@@ -403,13 +415,13 @@ The following section will compare and offer an interpretation of these results 
 
 | Model                     | Test Accuracy | Notes                                  |
 | ------------------------- | ------------- | -------------------------------------- |
-| Logistic Regression       | ~XX%          | Simple, interpretable                  |
-| Ridge Logistic Regression | ~XX%          | Slight improvement with regularization |
-| KNN                       | ~XX%          | Better with PCA                        |
+| Logistic Regression       | 92.2%         | Simple, interpretable                  |
+| Ridge Logistic Regression | 93.6%         | Slight improvement with regularization |
+| KNN                       | 77.54%        | Better with PCA                        |
 | Neural Network            | 83.9%         | Strong generalization                  |
-| Baseline Decision Tree    | 96.45%        | XXX                                    |
-| Random Forest             | 93.62%        | XXX                                    |
-| XGBoost                   | 95.74%        | XXX                                    |
+| Baseline Decision Tree    | 96.45%        | Best-performing model                  |
+| Random Forest             | 93.62%        | Weakest tree-based model               |
+| XGBoost                   | 95.74%        | Unexpected feature importances         |
 
 We will now compare our three best-performing models:
 
@@ -439,7 +451,8 @@ We observed very high testing accuracy and high training/validation accuracy acr
 
 Based on these results, we can exclude the possibility that our models were overfitting. However, this pattern revealed two important issues within the dataset:
 
-1. **Target Leakage via BMI-Related Features**As previously discussed, the target variable—obesity level—is derived directly from the **Body Mass Index (BMI)**, which is itself calculated using the features **"height"** and **"weight."** Including these features in the model introduced a direct link between inputs and the target, thereby inflating the predictive performance. In essence, the models were not discovering latent behavioral patterns, but rather reverse-engineering the BMI classification from the variables used to compute it.
+1. **Target Leakage via BMI-Related Features**
+   As previously discussed, the target variable—obesity level—is derived directly from the **Body Mass Index (BMI)**, which is itself calculated using the features **"height"** and **"weight."** Including these features in the model introduced a direct link between inputs and the target, thereby inflating the predictive performance. In essence, the models were not discovering latent behavioral patterns, but rather reverse-engineering the BMI classification from the variables used to compute it.
 2. **Synthetic Data and Non-Independent Splits**
    A significant portion of the dataset—approximately **77%** of the records—was synthetically generated using the **SMOTE algorithm** to address class imbalance. While SMOTE is effective at improving model robustness, it creates synthetic samples that are interpolated from existing ones. As a result, the **training and test sets are not entirely independent**, which likely reduced the challenge of the prediction task. This may explain why the test set performance matched—or even slightly exceeded—the training/validation accuracy.
 
@@ -471,13 +484,7 @@ Other lifestyle factors, such as "snacking frequency," "vegetable intake," and "
 
 ## 5. Policy Implications and Reflections
 
-- Preprocessing made a big difference across all models
-- Tree-based models helped us understand what mattered most
-- Neural networks were surprisingly manageable and performed well
-- Sharing the same train/test split helped standardize evaluation
-- We improved our understanding of ML pipelines, GitHub collaboration, and reproducibility
-
-THIS PART NEEDS TO BE REVISED IMHO (Nico)
+As already briefly discussed in the comparison part, our models are not very suitable for making policy recommendations. The goal of this project was to investigate the factors influencing obesity levels and to understand how we could potentially predict these. However, we found that the features height and weight are directly used to calculate the label. Removing these features has not led to any significant insights from which we can derive policy implications or recommendations. To understand this particularity better, we decided to look into the dataset’s original research paper: De-La-Hoz-Correa et al. (2019). The authors ran three models, namely Decision Trees (J48), Bayesian Networks (Naïve Bayes), and Logistic Regression (Simple Logistic). Their best-performing model was J48, with a test accuracy of 97.4%, similar to our baseline Decision Tree model. However, they did not look into the feature importances and do not mention them in their paper. We can therefore suppose that they faced the same particularity but did not notice or decided not to mention it. However, it must be said that their initial goal was not to predict obesity levels or to make policy recommendations, but rather to build a digital tool to detect obesity levels in people more efficiently. In such a case, it doesn’t really matter whether biometric and/or lifestyle factors matter, or to what extent they matter, as long as obesity levels can be accurately detected.
 
 <div style="page-break-after: always;"></div>
 
