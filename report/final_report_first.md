@@ -10,31 +10,26 @@ Machine Learning · Spring 2025
 **Authors**
 Nadine Daum · Jasmin Mehnert · Ashley Razo · Nicolas Reichardt
 
-GitHub: https://github.com/nicolasreichardt/ml-project-obesity-prediction
+[GitHub repo](https://github.com/nicolasreichardt/ml-project-obesity-prediction)
 Submission: 23 May 2025
 
 <div style="page-break-after: always;"></div>
 
 ## Summary
 
-This project applies supervised machine learning to classify individuals into obesity risk categories based on biometric and lifestyle data. We implemented and evaluated multiple models — including logistic regression, KNN, tree-based models, and a neural network — using a shared preprocessed dataset to ensure consistent and fair comparison.
+The project "Obesity Prediction: The Scale Doesn't Lie – But Does Our Model?" applies supervised machine learning to classify individuals into obesity risk categories based on biometric and lifestyle data. We implemented and evaluated multiple models (including logistic regression, KNN, tree-based models, and a neural network) using a shared preprocessed dataset to ensure consistent and fair comparison.
 
 Our best-performing models achieved test accuracy scores above 85%, with interpretable insights from tree-based approaches and strong generalization from the neural network.
 
----
-
 ## Table of Contents
 
-- [Obesity Prediction](#obesity-prediction)
-  - [The Scale Doesn’t Lie — But Does Our Model?](#the-scale-doesnt-lie--but-does-our-model)
   - [Summary](#summary)
-  - [Table of Contents](#table-of-contents)
   - [Team](#team)
   - [Project Overview](#project-overview)
   - [1. Dataset Description](#1-dataset-description)
-    - [Dataset Overview:](#dataset-overview)
-    - [EDA findings:](#eda-findings)
-    - [Train/Test Split:](#traintest-split)
+    - [Dataset Overview](#dataset-overview)
+    - [EDA findings](#eda-findings)
+    - [Train/Test Split](#traintest-split)
   - [2. Preprocessing \& Feature Engineering](#2-preprocessing--feature-engineering)
     - [Preprocessing Goals](#preprocessing-goals)
     - [Key Steps](#key-steps)
@@ -64,11 +59,10 @@ Our best-performing models achieved test accuracy scores above 85%, with interpr
       - [2. Uncommon Training/Test Results](#2-uncommon-trainingtest-results)
       - [3. Biometric Features vs. Lifestyle Features](#3-biometric-features-vs-lifestyle-features)
     - [Model Comparison with Feature Exclusion](#model-comparison-with-feature-exclusion)
-  - [5. Policy Implications and Reflections](#5-policy-implications-and-reflections)
+  - [5. Policy Implications](#5-policy-implications)
+  - [6. Reflection](#6-reflection)
   - [Appendix A: Links \& Files](#appendix-a-links--files)
   - [Appendix B: Team Contributions](#appendix-b-team-contributions)
-
----
 
 ## Team
 
@@ -77,15 +71,19 @@ Our best-performing models achieved test accuracy scores above 85%, with interpr
 - Ashley Razo – [GitHub](https://github.com/ashley-razo) | [Email](mailto:a.razo@students.hertie-school.org)
 - Nicolas Reichardt – [GitHub](https://github.com/nicolasreichardt) | [Email](mailto:n.reichardt@students.hertie-school.org)
 
+---
+
 ## Project Overview
 
 This project aims to classify individuals into seven obesity risk categories based on various biometric and behavioral factors. Using a labeled dataset of 2,111 individuals from Mexico, Peru, and Colombia, our models predict obesity levels ranging from *Insufficient Weight* to *Obesity Type III*.
 
-The goal is to explore how well machine learning models can predict obesity status — and how these predictions might support future public health decisions, risk assessment tools, or individual recommendations.
+The goal is to explore how well machine learning models can predict obesity status and how these predictions might support future public health decisions, risk assessment tools, or individual recommendations.
 
-GitHub repo: [nicolasreichardt/ml-project-obesity-prediction](https://github.com/nicolasreichardt/ml-project-obesity-prediction)
+[GitHub repo](https://github.com/nicolasreichardt/ml-project-obesity-prediction)
 
 <div style="page-break-after: always;"></div>
+
+---
 
 ## 1. Dataset Description
 
@@ -108,9 +106,13 @@ We used the **Obesity Levels Estimation Dataset**, which contains demographic, b
 
 The data was collected via a cross-sectional survey and is publicly available on [Kaggle](https://www.kaggle.com/datasets/ruchikakumbhar/obesity-prediction), supported by this [research article](https://pmc.ncbi.nlm.nih.gov/articles/PMC6710633/).
 
+<div style="page-break-after: always;"></div>
+
+---
+
 ### EDA findings:
 
-📒 Notebook: [`notebooks/EDA.ipynb`](notebooks/EDA.ipynb)
+📒 Notebook: [`notebooks/EDA.ipynb`](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/EDA.ipynb)
 
 Our EDA revealed several interesting patterns in the dataset. Weight exhibited a strong bimodal distribution and was the most predictive feature for distinguishing obesity levels. As expected, higher weight values were clearly associated with higher obesity categories, while height showed minimal variation across groups.
 
@@ -126,9 +128,11 @@ All team members used a shared train/test split to ensure model comparability.
 
 <div style="page-break-after: always;"></div>
 
+---
+
 ## 2. Preprocessing & Feature Engineering
 
-Before modeling, the dataset required thorough cleaning and transformation. This step was led primarily by **Ashley Razo** and **Jasmin Mehnert**, with feedback and reviews from all team members.
+Before modeling, the dataset required thorough cleaning and transformation. 
 
 ### Preprocessing Goals
 
@@ -154,12 +158,13 @@ All column names were renamed for clarity and uniformity, and a comprehensive da
 
 ### Implementation
 
-📒 Notebook: [`notebooks/preprocessing.ipynb`](notebooks/preprocessing.ipynb)
-🧾 Script: [`processed_data/data_preparation.py`](processed_data/data_preparation.py)
+📒 Notebook: [`notebooks/preprocessing.ipynb`](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/preprocessing.ipynb)
 
 All models consumed the same cleaned and scaled training and testing data.
 
 <div style="page-break-after: always;"></div>
+
+---
 
 ## 3. Model Overviews
 
@@ -167,7 +172,7 @@ All models used the same preprocessed data for consistency.
 
 ### Logistic Regression
 
-📒 [logistic_regression.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/logistic_regression.ipynb)
+📒 Notebook: [`logistic_regression.ipynb`](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/logistic_regression.ipynb)
 
 To start with a simple baseline, a logistic regression was used to predict obesity levels based on lifestyle and demographic variables. 
 
@@ -193,9 +198,11 @@ The confusion matrix shows how well a model's predictions match the actual label
 
 <div style="page-break-after: always;"></div>
 
+---
+
 ### Ridge Logistic Regression
 
-📒 [ridge_logistic_regression.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/ridge_logistic_regression.ipynb)
+📒 Notebook: [`ridge_logistic_regression.ipynb`](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/ridge_logistic_regression.ipynb)
 
 Next, a regularized version of logisitc regression is used to predict obesity levels based on lifestyle and demographic variables. 
 
@@ -220,15 +227,16 @@ Ridge Logistic Regression adds <strong>L2 regularization</strong>, which penaliz
 
 - <strong> Better Weights Sharing Across Classes</strong>: Ridge performs well in multi-class classification because it balances the coefficients for all classes simultaneously, unlike logistic regression which can overfit certain classes. 
 
-
 #### Summary 
 When comparing regular logistic regression and ridge logistic regression on the obesity classification task, we find that ridge achieves a higher test accuracy (93.6% vs. 92.2%) and stronger performance across nearly all classes. This improvement stems from ridge's use of L2 regularization, which penalizes overly large coefficients and mitigates overfitting. This is especially important in high-dimensional settings with many one-hot encoded categorical features. Notably, class-level F1 scores improved in categories like "Normal_Weight" and both "Overweight_Level" classes, suggesting that ridge helped the model better distinguish between closely related classes. Overall, ridge logistic regression offers more robust generalization and smoother class boundaries in this multi-class classification context. 
 
 <div style="page-break-after: always;"></div>
 
+---
+
 ### K-Nearest Neighbors (KNN)
 
-📒 [PCA_KNN.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/PCA_KNN.ipynb)
+📒 Notebook: [`PCA_KNN.ipynb`](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/PCA_KNN.ipynb)
 
 This notebook investigates how dimensionality reduction with Principal Component Analysis (PCA) affects the performance of a K-Nearest Neighbors (KNN) classifier in predicting obesity levels. Four variations of KNN were trained and evaluated:
 
@@ -320,9 +328,11 @@ A 3D PCA plot was generated using the first three components. Original features 
 
 <div style="page-break-after: always;"></div>
 
+---
+
 ### Neural Network
 
-📒 [neural_network.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/neural_network.ipynb)
+📒 Notebook: [`neural_network.ipynb`](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/neural_network.ipynb)
 
 This notebook implements a multi-layer feedforward neural network for classifying individuals into one of seven obesity categories. The model was built using Keras with a TensorFlow backend and trained on the shared, preprocessed dataset.
 
@@ -379,9 +389,11 @@ The model showed strong predictive ability across most classes, with misclassifi
 
 <div style="page-break-after: always;"></div>
 
+---
+
 ### Tree-Based Models
 
-📒 [tree-based-models.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/tree-based-models.ipynb)
+📒 Notebook: [`tree-based-models.ipynb`](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/tree-based-models.ipynb)
 
 This notebook investigated the use of tree-based machine learning models to classify obesity levels in individuals. Three models were trained and evaluated:
 
@@ -454,6 +466,8 @@ The following section will compare and offer an interpretation of these results 
 
 <div style="page-break-after: always;"></div>
 
+---
+
 ## 4. Model Comparison
 
 | Model                     | Test Accuracy | Notes                                  |
@@ -525,11 +539,40 @@ Notably, both the Random Forest and XGBoost models achieved identical test accur
 
 Other lifestyle factors, such as "snacking frequency," "vegetable intake," and "physical exercise," showed some predictive power for obesity classes. However, their predictive ability was way lower than that of height and weight in our previous models.
 
-## 5. Policy Implications and Reflections
+---
 
-As already briefly discussed in the comparison part, our models are not very suitable for making policy recommendations. The goal of this project was to investigate the factors influencing obesity levels and to understand how we could potentially predict these. However, we found that the features height and weight are directly used to calculate the label. Removing these features has not led to any significant insights from which we can derive policy implications or recommendations. To understand this particularity better, we decided to look into the dataset’s original research paper: De-La-Hoz-Correa et al. (2019). The authors ran three models, namely Decision Trees (J48), Bayesian Networks (Naïve Bayes), and Logistic Regression (Simple Logistic). Their best-performing model was J48, with a test accuracy of 97.4%, similar to our baseline Decision Tree model. However, they did not look into the feature importances and do not mention them in their paper. We can therefore suppose that they faced the same particularity but did not notice or decided not to mention it. However, it must be said that their initial goal was not to predict obesity levels or to make policy recommendations, but rather to build a digital tool to detect obesity levels in people more efficiently. In such a case, it doesn’t really matter whether biometric and/or lifestyle factors matter, or to what extent they matter, as long as obesity levels can be accurately detected.
+## 5. Policy Implications
+
+As already discussed in the comparison section, our models are not well suited for making policy recommendations. While the project originally aimed to explore behavioral and biometric factors contributing to obesity levels, it became clear that the most predictive features (weight and height) are the very inputs used to compute the label itself (BMI class). Removing these features caused model performance to drop significantly, but did not reveal meaningful alternative predictors. This suggests that our models, much like the label, rely heavily on BMI-related inputs.  
+
+To better understand this, we revisited the original [paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6710633/) by De-La-Hoz-Correa, Mendoza-Palechor, and De-La-Hoz-Franco (2019), which introduced the dataset. Their goal was to build a digital tool that could classify obesity levels more efficiently using models like J48 Decision Trees and Naïve Bayes. However, their approach (and ours, by necessity) ends up replicating a BMI calculator: the model receives weight and height as input, and then “predicts” a BMI category that is literally derived from those same inputs.
+
+In practice, this means the tool and our models do not provide additional value beyond what a simple calculator could offer. From a policy perspective, this approach is of limited use: it can't help identify modifiable behaviors, socio-economic risk factors, or intervention targets.
+
+A more useful tool would aim to:
+- Exclude BMI-defining inputs like weight and height
+- Focus on behavioral, psychological, or socio-demographic data
+- Predict long-term health outcomes or obesity risk, not BMI class alone
+
+Such an approach would be better suited for identifying at-risk populations, guiding prevention efforts, and shaping public health policy (especially in contexts where biometric data is unavailable).
+
+---
+
+## 6. Reflection
+
+This project came with both strengths and challenges. One of our biggest strengths was working collaboratively on a consistent preprocessing pipeline: ensuring that all models used the same cleaned data, feature encodings, and train/test split. This made comparison between models much more reproducible.
+
+That said, we also faced several challenges. Data imbalance, model tuning, and choosing the right evaluation metrics required careful attention. But tackling these difficulties helped us deepen our understanding of model behavior, especially in multi-class classification tasks.
+
+Perhaps the most important lesson we learned was this: spend more time up front investigating your dataset. Understanding how features are constructed (and whether the target variable is derived from other inputs) can drastically affect your entire modeling strategy. In our case, we were aware that the dataset included synthetically generated samples (via SMOTE), but we only fully grasped the consequences when we saw how dominant height and weight were in determining the label. It was during model training and evaluation that we realized the original goal (modeling behavioral drivers of obesity) was not feasible with this dataset.
+
+Looking ahead, future improvements could include validating our models on a real-world dataset that wasn’t artificially constructed, ideally with health outcomes beyond BMI. It would also be interesting to explore unsupervised methods or clustering to understand lifestyle patterns, especially if labels are noisy or questionable.
+
+Overall, this project gave us hands-on experience with a full supervised machine learning workflow and reminded us that technical performance isn’t everything: context and critical thinking matter just as much.
 
 <div style="page-break-after: always;"></div>
+
+---
 
 ## Appendix A: Links & Files
 
@@ -540,6 +583,8 @@ As already briefly discussed in the comparison part, our models are not very sui
   - `processed_data/test_data.feather`
 - **Model notebooks**: in `notebooks/`
 - **Generated plots**: in `plots/`
+
+---
 
 ## Appendix B: Team Contributions
 
