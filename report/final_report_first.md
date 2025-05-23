@@ -148,8 +148,6 @@ Before modeling, the dataset required thorough cleaning and transformation. This
 
 ### Data Preprocessing Summary
 
-> 📝 **@Ashley** – feel free to insert 1–2 sentences on your preprocessing pipeline: decisions around feature selection, encoding strategies, or challenges during cleaning
-
 The preprocessing pipeline ensured consistency and cleanliness of the dataset ahead of modeling. Initially, inconsistencies in categorical encodings were resolved by harmonizing all variables into either clean categorical or numeric formats. Several ordinal features contained unexpected decimal values, likely due to synthetic oversampling (SMOTE). These were systematically rounded to the nearest valid categories and mapped back to interpretable labels, informed by the original survey structure.
 
 All column names were renamed for clarity and uniformity, and a comprehensive data dictionary was created to document question wording and response options. Categorical features were converted to the appropriate category type, while numerical variables were explicitly cast as floats.
@@ -171,7 +169,27 @@ All models used the same preprocessed data for consistency.
 
 📒 [logistic_regression.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/logistic_regression.ipynb)
 
-- Simple baseline with good interpretability
+To start with a simple baseline, a logistic regression was used to predict obesity levels based on lifestyle and demographic variables. 
+
+![](../plots/logistic_regression.png)
+
+#### Confusion Matrix Explanation 
+The confusion matrix shows how well a model's predictions match the actual labels. Some insights from the confusion matrix are:
+
+- Misclassifications are more frequent in the "Normal_Weight" and "Overweight_Level_I/II" classes. The model struggles more with these compared to the obesity types, likely due to class overlap or underrepresentation in the data. This may guide sampling adjustments or weighted loss functions. 
+
+- "Insufficient_Weight" has <strong>precision (O.89)</strong> and very high <strong>recall (0.98)</strong> meaning the model rarely misclassifies others as this class and identifies it well. 
+
+- "Overweight_Level_I" and "Overweight_Level_II" both have <strong>lower recall (0.86 and 0.90 respectively)</strong> and <strong>F-1 scores(~0.85 - 0.89)</strong> highlighting weakness in distinguishing between these classes. This may show which predictions you can trust more than others which can be critical in medical contexts. 
+
+- Additionally, the confusion between "Normal_Weight" and "overweight_Level_I" suggests features (e.g. calorie tracking or exercise) are not distinctive enough between these classes. 
+
+#### Summary 
+- Best logisitc regression parameters: C = 10, Penalty = L2
+- Cross-validation Accuracy: 90.99 %
+- Test Set Accuracy: 92.20 %
+- Logistic regression performs well across most classes with minor classification in closely related categories (e.g. Overweight I vs II).
+- This model provided a simple baseline with good interpretability. 
 
 <div style="page-break-after: always;"></div>
 
@@ -179,7 +197,32 @@ All models used the same preprocessed data for consistency.
 
 📒 [ridge_logistic_regression.ipynb](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/ridge_logistic_regression.ipynb)
 
-- Regularized version of logistic regression
+Next, a regularized version of logisitc regression is used to predict obesity levels based on lifestyle and demographic variables. 
+
+![](../plots/ridge_logistic_regression.png)
+
+#### Comparing Results: Ridge vs Regular Logistic Regression 
+- <strong>Insufficient_Weight</strong>: Recall improved from 0.98 -> 1.00
+- <strong>Normal_Weight</strong>: Recall improved from 0.81 -> 0.84, F1 from 0.85 -> 0.90
+- <strong>Obesity_Type_III</strong>: Stayed at a strong 1.00 recall, with a slight boost in precision.
+- <strong>Overweight Levels</strong>: Notably stronger F-1 scores across both levels. 
+  - Level I: 0.85 -> <strong>0.89</strong>
+  - Level II: 0.89 -> <strong>0.92</strong>
+
+
+#### Why Ridge Performed Better: 
+Ridge Logistic Regression adds <strong>L2 regularization</strong>, which penalizes large coefficient value. This has several benefits:
+- <strong> Prevents Overfitting </strong>: By discouraging large swings in model weights, ridge regularization reduces the chance of the model fitting noise, especially when you have many dummy variables from one-hot encoding. 
+
+- <strong> Handles Multicollinearity</strong>: Since many features in the dataset (e.g. different frequency levels of food/exercises) are likely correlated, ridge helps stabilize the learning process, spreading importance more evenly. 
+
+- <strong> Improved Generalization </strong>: The higher <strong> test accuracy (93.6%)</strong> suggests the model generalizes better to unseen data due to the smoother decision boundaries. 
+
+- <strong> Better Weights Sharing Across Classes</strong>: Ridge performs well in multi-class classification because it balances the coefficients for all classes simultaneously, unlike logistic regression which can overfit certain classes. 
+
+
+#### Summary 
+When comparing regular logistic regression and ridge logistic regression on the obesity classification task, we find that ridge achieves a higher test accuracy (93.6% vs. 92.2%) and stronger performance across nearly all classes. This improvement stems from ridge's use of L2 regularization, which penalizes overly large coefficients and mitigates overfitting. This is especially important in high-dimensional settings with many one-hot encoded categorical features. Notably, class-level F1 scores improved in categories like "Normal_Weight" and both "Overweight_Level" classes, suggesting that ridge helped the model better distinguish between closely related classes. Overall, ridge logistic regression offers more robust generalization and smoother class boundaries in this multi-class classification context. 
 
 <div style="page-break-after: always;"></div>
 
