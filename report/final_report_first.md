@@ -23,13 +23,15 @@ Our best-performing models achieved test accuracy scores above 85%, with interpr
 
 ## Table of Contents
 
+- [Obesity Prediction](#obesity-prediction)
+  - [The Scale Doesn’t Lie — But Does Our Model?](#the-scale-doesnt-lie--but-does-our-model)
   - [Summary](#summary)
+  - [Table of Contents](#table-of-contents)
   - [Team](#team)
   - [Project Overview](#project-overview)
   - [1. Dataset Description](#1-dataset-description)
-    - [Dataset Overview](#dataset-overview)
-    - [EDA findings](#eda-findings)
-    - [Train/Test Split](#traintest-split)
+    - [Dataset Overview:](#dataset-overview)
+    - [EDA findings:](#eda-findings)
   - [2. Preprocessing \& Feature Engineering](#2-preprocessing--feature-engineering)
     - [Preprocessing Goals](#preprocessing-goals)
     - [Key Steps](#key-steps)
@@ -37,7 +39,12 @@ Our best-performing models achieved test accuracy scores above 85%, with interpr
     - [Implementation](#implementation)
   - [3. Model Overviews](#3-model-overviews)
     - [Logistic Regression](#logistic-regression)
+      - [Confusion Matrix Explanation](#confusion-matrix-explanation)
+      - [Summary](#summary-1)
     - [Ridge Logistic Regression](#ridge-logistic-regression)
+      - [Comparing Results: Ridge vs Regular Logistic Regression](#comparing-results-ridge-vs-regular-logistic-regression)
+      - [Why Ridge Performed Better:](#why-ridge-performed-better)
+      - [Summary](#summary-2)
     - [K-Nearest Neighbors (KNN)](#k-nearest-neighbors-knn)
     - [Encoding Strategy](#encoding-strategy)
     - [Baseline KNN Classifier (No PCA)](#baseline-knn-classifier-no-pca)
@@ -62,7 +69,6 @@ Our best-performing models achieved test accuracy scores above 85%, with interpr
   - [5. Policy Implications](#5-policy-implications)
   - [6. Reflection](#6-reflection)
   - [Appendix A: Links \& Files](#appendix-a-links--files)
-  - [Appendix B: Team Contributions](#appendix-b-team-contributions)
 
 ## Team
 
@@ -120,11 +126,7 @@ Among the numerical features, age was slightly right-skewed, with a concentratio
 
 Correlation analysis supported these insights: weight had strong positive correlations with Obesity_Type_I and Obesity_Type_II, and a negative correlation with Normal_Weight. Behavioral factors such as vegetable intake, snacking, and screen time showed moderate correlations, suggesting their relevance when combined in a predictive model.
 
-![](../plots/heatmap.png)
-
-### Train/Test Split:
-
-All team members used a shared train/test split to ensure model comparability.
+![img](../plots/heatmap.png)
 
 <div style="page-break-after: always;"></div>
 
@@ -132,7 +134,7 @@ All team members used a shared train/test split to ensure model comparability.
 
 ## 2. Preprocessing & Feature Engineering
 
-Before modeling, the dataset required thorough cleaning and transformation. 
+Before modeling, the dataset required thorough cleaning and transformation.
 
 ### Preprocessing Goals
 
@@ -174,27 +176,26 @@ All models used the same preprocessed data for consistency.
 
 📒 Notebook: [`logistic_regression.ipynb`](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/logistic_regression.ipynb)
 
-To start with a simple baseline, a logistic regression was used to predict obesity levels based on lifestyle and demographic variables. 
+To start with a simple baseline, a logistic regression was used to predict obesity levels based on lifestyle and demographic variables.
 
 ![](../plots/logistic_regression.png)
 
-#### Confusion Matrix Explanation 
+#### Confusion Matrix Explanation
+
 The confusion matrix shows how well a model's predictions match the actual labels. Some insights from the confusion matrix are:
 
-- Misclassifications are more frequent in the "Normal_Weight" and "Overweight_Level_I/II" classes. The model struggles more with these compared to the obesity types, likely due to class overlap or underrepresentation in the data. This may guide sampling adjustments or weighted loss functions. 
+- Misclassifications are more frequent in the "Normal_Weight" and "Overweight_Level_I/II" classes. The model struggles more with these compared to the obesity types, likely due to class overlap or underrepresentation in the data. This may guide sampling adjustments or weighted loss functions.
+- "Insufficient_Weight" has `<strong>`precision (O.89)`</strong>` and very high `<strong>`recall (0.98)`</strong>` meaning the model rarely misclassifies others as this class and identifies it well.
+- "Overweight_Level_I" and "Overweight_Level_II" both have `<strong>`lower recall (0.86 and 0.90 respectively)`</strong>` and `<strong>`F-1 scores(~0.85 - 0.89)`</strong>` highlighting weakness in distinguishing between these classes. This may show which predictions you can trust more than others which can be critical in medical contexts.
+- Additionally, the confusion between "Normal_Weight" and "overweight_Level_I" suggests features (e.g. calorie tracking or exercise) are not distinctive enough between these classes.
 
-- "Insufficient_Weight" has <strong>precision (O.89)</strong> and very high <strong>recall (0.98)</strong> meaning the model rarely misclassifies others as this class and identifies it well. 
+#### Summary
 
-- "Overweight_Level_I" and "Overweight_Level_II" both have <strong>lower recall (0.86 and 0.90 respectively)</strong> and <strong>F-1 scores(~0.85 - 0.89)</strong> highlighting weakness in distinguishing between these classes. This may show which predictions you can trust more than others which can be critical in medical contexts. 
-
-- Additionally, the confusion between "Normal_Weight" and "overweight_Level_I" suggests features (e.g. calorie tracking or exercise) are not distinctive enough between these classes. 
-
-#### Summary 
 - Best logisitc regression parameters: C = 10, Penalty = L2
 - Cross-validation Accuracy: 90.99 %
 - Test Set Accuracy: 92.20 %
 - Logistic regression performs well across most classes with minor classification in closely related categories (e.g. Overweight I vs II).
-- This model provided a simple baseline with good interpretability. 
+- This model provided a simple baseline with good interpretability.
 
 <div style="page-break-after: always;"></div>
 
@@ -204,31 +205,31 @@ The confusion matrix shows how well a model's predictions match the actual label
 
 📒 Notebook: [`ridge_logistic_regression.ipynb`](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/ridge_logistic_regression.ipynb)
 
-Next, a regularized version of logisitc regression is used to predict obesity levels based on lifestyle and demographic variables. 
+Next, a regularized version of logisitc regression is used to predict obesity levels based on lifestyle and demographic variables.
 
 ![](../plots/ridge_logistic_regression.png)
 
-#### Comparing Results: Ridge vs Regular Logistic Regression 
-- <strong>Insufficient_Weight</strong>: Recall improved from 0.98 -> 1.00
-- <strong>Normal_Weight</strong>: Recall improved from 0.81 -> 0.84, F1 from 0.85 -> 0.90
-- <strong>Obesity_Type_III</strong>: Stayed at a strong 1.00 recall, with a slight boost in precision.
-- <strong>Overweight Levels</strong>: Notably stronger F-1 scores across both levels. 
-  - Level I: 0.85 -> <strong>0.89</strong>
-  - Level II: 0.89 -> <strong>0.92</strong>
+#### Comparing Results: Ridge vs Regular Logistic Regression
 
+- `<strong>`Insufficient_Weight `</strong>`: Recall improved from 0.98 -> 1.00
+- `<strong>`Normal_Weight `</strong>`: Recall improved from 0.81 -> 0.84, F1 from 0.85 -> 0.90
+- `<strong>`Obesity_Type_III `</strong>`: Stayed at a strong 1.00 recall, with a slight boost in precision.
+- `<strong>`Overweight Levels `</strong>`: Notably stronger F-1 scores across both levels.
+  - Level I: 0.85 -> `<strong>`0.89 `</strong>`
+  - Level II: 0.89 -> `<strong>`0.92 `</strong>`
 
-#### Why Ridge Performed Better: 
-Ridge Logistic Regression adds <strong>L2 regularization</strong>, which penalizes large coefficient value. This has several benefits:
-- <strong> Prevents Overfitting </strong>: By discouraging large swings in model weights, ridge regularization reduces the chance of the model fitting noise, especially when you have many dummy variables from one-hot encoding. 
+#### Why Ridge Performed Better:
 
-- <strong> Handles Multicollinearity</strong>: Since many features in the dataset (e.g. different frequency levels of food/exercises) are likely correlated, ridge helps stabilize the learning process, spreading importance more evenly. 
+Ridge Logistic Regression adds `<strong>`L2 regularization `</strong>`, which penalizes large coefficient value. This has several benefits:
 
-- <strong> Improved Generalization </strong>: The higher <strong> test accuracy (93.6%)</strong> suggests the model generalizes better to unseen data due to the smoother decision boundaries. 
+- `<strong>` Prevents Overfitting `</strong>`: By discouraging large swings in model weights, ridge regularization reduces the chance of the model fitting noise, especially when you have many dummy variables from one-hot encoding.
+- `<strong>` Handles Multicollinearity `</strong>`: Since many features in the dataset (e.g. different frequency levels of food/exercises) are likely correlated, ridge helps stabilize the learning process, spreading importance more evenly.
+- `<strong>` Improved Generalization `</strong>`: The higher `<strong>` test accuracy (93.6%)`</strong>` suggests the model generalizes better to unseen data due to the smoother decision boundaries.
+- `<strong>` Better Weights Sharing Across Classes `</strong>`: Ridge performs well in multi-class classification because it balances the coefficients for all classes simultaneously, unlike logistic regression which can overfit certain classes.
 
-- <strong> Better Weights Sharing Across Classes</strong>: Ridge performs well in multi-class classification because it balances the coefficients for all classes simultaneously, unlike logistic regression which can overfit certain classes. 
+#### Summary
 
-#### Summary 
-When comparing regular logistic regression and ridge logistic regression on the obesity classification task, we find that ridge achieves a higher test accuracy (93.6% vs. 92.2%) and stronger performance across nearly all classes. This improvement stems from ridge's use of L2 regularization, which penalizes overly large coefficients and mitigates overfitting. This is especially important in high-dimensional settings with many one-hot encoded categorical features. Notably, class-level F1 scores improved in categories like "Normal_Weight" and both "Overweight_Level" classes, suggesting that ridge helped the model better distinguish between closely related classes. Overall, ridge logistic regression offers more robust generalization and smoother class boundaries in this multi-class classification context. 
+When comparing regular logistic regression and ridge logistic regression on the obesity classification task, we find that ridge achieves a higher test accuracy (93.6% vs. 92.2%) and stronger performance across nearly all classes. This improvement stems from ridge's use of L2 regularization, which penalizes overly large coefficients and mitigates overfitting. This is especially important in high-dimensional settings with many one-hot encoded categorical features. Notably, class-level F1 scores improved in categories like "Normal_Weight" and both "Overweight_Level" classes, suggesting that ridge helped the model better distinguish between closely related classes. Overall, ridge logistic regression offers more robust generalization and smoother class boundaries in this multi-class classification context.
 
 <div style="page-break-after: always;"></div>
 
@@ -310,6 +311,7 @@ To assess generalizability, the model was re-evaluated on a 23% subset of non-sy
 - **Test Accuracy:** 0.8763
 
 ![](../plots/accuracy_vs_k_real_data.png)
+
 ![](../plots/explained_variance_real_data.png)
 
 This confirms that PCA can be effective in real-world scenarios, helping to reduce noise and correlation while preserving essential structure.
@@ -361,8 +363,6 @@ The model was trained using:
 The model was trained on the shared training set (`train_data.feather`) and evaluated on the standard test set. The training history showed stable convergence of both loss and accuracy, with validation metrics closely tracking the training metrics:
 
 ![Training Curve](../plots/nn_training_curve.png)
-  
-  images/nn_training_curve.png)
 
 No signs of overfitting were observed, likely due to dropout regularization and standardized inputs.
 
@@ -543,13 +543,14 @@ Other lifestyle factors, such as "snacking frequency," "vegetable intake," and "
 
 ## 5. Policy Implications
 
-As already discussed in the comparison section, our models are not well suited for making policy recommendations. While the project originally aimed to explore behavioral and biometric factors contributing to obesity levels, it became clear that the most predictive features (weight and height) are the very inputs used to compute the label itself (BMI class). Removing these features caused model performance to drop significantly, but did not reveal meaningful alternative predictors. This suggests that our models, much like the label, rely heavily on BMI-related inputs.  
+As already discussed in the comparison section, our models are not well suited for making policy recommendations. While the project originally aimed to explore behavioral and biometric factors contributing to obesity levels, it became clear that the most predictive features (weight and height) are the very inputs used to compute the label itself (BMI class). Removing these features caused model performance to drop significantly, but did not reveal meaningful alternative predictors. This suggests that our models, much like the label, rely heavily on BMI-related inputs.
 
 To better understand this, we revisited the original [paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6710633/) by De-La-Hoz-Correa, Mendoza-Palechor, and De-La-Hoz-Franco (2019), which introduced the dataset. Their goal was to build a digital tool that could classify obesity levels more efficiently using models like J48 Decision Trees and Naïve Bayes. However, their approach (and ours, by necessity) ends up replicating a BMI calculator: the model receives weight and height as input, and then “predicts” a BMI category that is literally derived from those same inputs.
 
 In practice, this means the tool and our models do not provide additional value beyond what a simple calculator could offer. From a policy perspective, this approach is of limited use: it can't help identify modifiable behaviors, socio-economic risk factors, or intervention targets.
 
 A more useful tool would aim to:
+
 - Exclude BMI-defining inputs like weight and height
 - Focus on behavioral, psychological, or socio-demographic data
 - Predict long-term health outcomes or obesity risk, not BMI class alone
@@ -583,13 +584,3 @@ Overall, this project gave us hands-on experience with a full supervised machine
   - `processed_data/test_data.feather`
 - **Model notebooks**: in `notebooks/`
 - **Generated plots**: in `plots/`
-
----
-
-## Appendix B: Team Contributions
-
-- **Nadine Daum** – Neural network, Ridge/Lasso regression
-- **Ashley Razo** – Preprocessing, logistic regression
-- **Jasmin Mehnert** – PCA & KNN, preprocessing support
-- **Nicolas Reichardt** – Random Forest, XGBoost, evaluation
-  All team members contributed to meetings, reviews, and report writing.
