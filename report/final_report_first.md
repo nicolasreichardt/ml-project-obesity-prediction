@@ -128,8 +128,6 @@ Correlation analysis supported these insights: weight had strong positive correl
 
 ![img](../plots/heatmap.png)
 
-<div style="page-break-after: always;"></div>
-
 ---
 
 ## 2. Preprocessing & Feature Engineering
@@ -163,8 +161,6 @@ All column names were renamed for clarity and uniformity, and a comprehensive da
 📒 Notebook: [`notebooks/preprocessing.ipynb`](https://github.com/nicolasreichardt/ml-project-obesity-prediction/blob/main/notebooks/preprocessing.ipynb)
 
 All models consumed the same cleaned and scaled training and testing data.
-
-<div style="page-break-after: always;"></div>
 
 ---
 
@@ -570,8 +566,6 @@ Perhaps the most important lesson we learned was this: spend more time up front 
 Looking ahead, future improvements could include validating our models on a real-world dataset that wasn’t artificially constructed, ideally with health outcomes beyond BMI. It would also be interesting to explore unsupervised methods or clustering to understand lifestyle patterns, especially if labels are noisy or questionable.
 
 Overall, this project gave us hands-on experience with a full supervised machine learning workflow and reminded us that technical performance isn’t everything: context and critical thinking matter just as much.
-
-<div style="page-break-after: always;"></div>
 
 ---
 
